@@ -23,19 +23,34 @@ export default function LeadCaptureForm({ onComplete }) {
     setError("");
 
     try {
-      await base44.entities.Lead.create({
-        full_name: formData.full_name,
-        email: formData.email,
-        phone: formData.phone,
-        accepted_terms: true,
-        accepted_at: new Date().toISOString(),
-      });
+      if (isReturningUser) {
+        // Modo verificação: buscar lead existente
+        const leads = await base44.entities.Lead.filter({ email: formData.email });
+        
+        if (leads.length > 0) {
+          // Lead encontrado - liberar acesso
+          localStorage.setItem('celeiro_lead_submitted', 'true');
+          localStorage.setItem('celeiro_user_email', formData.email);
+          onComplete();
+        } else {
+          setError('Email não encontrado. Cadastre-se primeiro.');
+        }
+      } else {
+        // Modo cadastro: criar novo lead
+        await base44.entities.Lead.create({
+          full_name: formData.full_name,
+          email: formData.email,
+          phone: formData.phone,
+          accepted_terms: true,
+          accepted_at: new Date().toISOString(),
+        });
 
-      localStorage.setItem('celeiro_lead_submitted', 'true');
-      localStorage.setItem('celeiro_user_email', formData.email);
-      onComplete();
+        localStorage.setItem('celeiro_lead_submitted', 'true');
+        localStorage.setItem('celeiro_user_email', formData.email);
+        onComplete();
+      }
     } catch (err) {
-      setError('Erro ao salvar seus dados. Tente novamente.');
+      setError('Erro ao processar. Tente novamente.');
     } finally {
       setLoading(false);
     }
@@ -61,16 +76,18 @@ export default function LeadCaptureForm({ onComplete }) {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="text-gray-400 text-sm mb-2 block">Nome Completo *</label>
-            <Input
-              value={formData.full_name}
-              onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
-              required
-              className="bg-white/[0.04] border-white/10 text-white"
-              placeholder="Seu nome completo"
-            />
-          </div>
+          {!isReturningUser && (
+            <div>
+              <label className="text-gray-400 text-sm mb-2 block">Nome Completo *</label>
+              <Input
+                value={formData.full_name}
+                onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
+                required
+                className="bg-white/[0.04] border-white/10 text-white"
+                placeholder="Seu nome completo"
+              />
+            </div>
+          )}
 
           <div>
             <label className="text-gray-400 text-sm mb-2 block">Email *</label>
@@ -84,40 +101,44 @@ export default function LeadCaptureForm({ onComplete }) {
             />
           </div>
 
-          <div>
-            <label className="text-gray-400 text-sm mb-2 block">Telefone *</label>
-            <Input
-              type="tel"
-              value={formData.phone}
-              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-              required
-              className="bg-white/[0.04] border-white/10 text-white"
-              placeholder="(00) 00000-0000"
-            />
-          </div>
+          {!isReturningUser && (
+            <>
+              <div>
+                <label className="text-gray-400 text-sm mb-2 block">Telefone *</label>
+                <Input
+                  type="tel"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  required
+                  className="bg-white/[0.04] border-white/10 text-white"
+                  placeholder="(00) 00000-0000"
+                />
+              </div>
 
-          <div>
-            <label className="text-gray-400 text-sm mb-2 block">Senha *</label>
-            <div className="relative">
-              <Input
-                type={showPassword ? "text" : "password"}
-                value={formData.password}
-                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                required
-                minLength={6}
-                className="bg-white/[0.04] border-white/10 text-white pr-10"
-                placeholder="Mínimo 6 caracteres"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
-              >
-                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-              </button>
-            </div>
-            <p className="text-xs text-gray-500 mt-1">Sua senha não será armazenada publicamente</p>
-          </div>
+              <div>
+                <label className="text-gray-400 text-sm mb-2 block">Senha *</label>
+                <div className="relative">
+                  <Input
+                    type={showPassword ? "text" : "password"}
+                    value={formData.password}
+                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                    required
+                    minLength={6}
+                    className="bg-white/[0.04] border-white/10 text-white pr-10"
+                    placeholder="Mínimo 6 caracteres"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors"
+                  >
+                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
+                <p className="text-xs text-gray-500 mt-1">Sua senha não será armazenada publicamente</p>
+              </div>
+            </>
+          )}
 
           {error && (
             <p className="text-red-400 text-sm">{error}</p>
@@ -131,16 +152,29 @@ export default function LeadCaptureForm({ onComplete }) {
             {loading ? (
               <>
                 <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                Processando...
+                {isReturningUser ? 'Verificando...' : 'Processando...'}
               </>
             ) : (
-              'Continuar para o Site'
+              isReturningUser ? 'Acessar' : 'Continuar para o Site'
             )}
           </Button>
+
+          <button
+            type="button"
+            onClick={() => {
+              setIsReturningUser(!isReturningUser);
+              setError("");
+            }}
+            className="w-full text-center text-sm text-gray-400 hover:text-[#39FF14] transition-colors mt-4"
+          >
+            {isReturningUser ? 'Quero me cadastrar' : 'Já sou cadastrado'}
+          </button>
         </form>
 
         <p className="text-xs text-gray-500 text-center mt-6">
-          Seus dados estão protegidos pela LGPD e serão utilizados apenas para fins educacionais
+          {isReturningUser 
+            ? 'Validaremos seu email automaticamente' 
+            : 'Seus dados estão protegidos pela LGPD e serão utilizados apenas para fins educacionais'}
         </p>
       </motion.div>
     </div>
