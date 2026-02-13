@@ -3,11 +3,12 @@ import { base44 } from "@/api/base44Client";
 import { useQuery } from "@tanstack/react-query";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { BarChart3, Users, BookOpen, Download, Loader2, MapPin } from "lucide-react";
+import { BarChart3, Users, BookOpen, Download, Loader2, MapPin, UserPlus } from "lucide-react";
 import SeoMetrics from "../components/admin/SeoMetrics";
 import UsersTable from "../components/admin/UsersTable";
 import CourseManager from "../components/admin/CourseManager";
 import CityManager from "../components/admin/CityManager";
+import LeadsTable from "../components/admin/LeadsTable";
 import { createPageUrl } from "../utils";
 import { Link } from "react-router-dom";
 
@@ -59,6 +60,13 @@ export default function Admin() {
   const { data: cities } = useQuery({
     queryKey: ['cities'],
     queryFn: () => base44.entities.City.list(),
+    initialData: [],
+    enabled: !!currentUser,
+  });
+
+  const { data: leads } = useQuery({
+    queryKey: ['leads'],
+    queryFn: () => base44.entities.Lead.list('-created_date'),
     initialData: [],
     enabled: !!currentUser,
   });
@@ -142,6 +150,10 @@ export default function Admin() {
               <MapPin className="w-4 h-4 mr-2" />
               Unidades
             </TabsTrigger>
+            <TabsTrigger value="leads" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#39FF14] data-[state=active]:to-[#00E5FF] data-[state=active]:text-black">
+              <UserPlus className="w-4 h-4 mr-2" />
+              Leads
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="seo">
@@ -158,6 +170,10 @@ export default function Admin() {
 
           <TabsContent value="cities">
             <CityManager cities={cities} />
+          </TabsContent>
+
+          <TabsContent value="leads">
+            <LeadsTable leads={leads} />
           </TabsContent>
         </Tabs>
       </div>

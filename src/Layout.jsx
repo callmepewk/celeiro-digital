@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { createPageUrl } from "./utils";
-import { Sprout, Menu, X } from "lucide-react";
+import { Sprout, Menu, X, Shield } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { base44 } from "@/api/base44Client";
 
 const navLinks = [
   { label: "Início", href: "#" },
@@ -16,11 +17,22 @@ const navLinks = [
 export default function Layout({ children }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+
+    async function checkAdmin() {
+      try {
+        const user = await base44.auth.me();
+        setIsAdmin(user?.role === 'admin');
+      } catch (error) {
+        setIsAdmin(false);
+      }
+    }
+    checkAdmin();
   }, []);
 
   const handleNavClick = (href) => {
@@ -76,6 +88,14 @@ export default function Layout({ children }) {
                 {link.label}
               </button>
             ))}
+            {isAdmin && (
+              <Link to={createPageUrl('Admin')}>
+                <button className="flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-gradient-to-r from-[#39FF14]/10 to-[#00E5FF]/10 border border-[#39FF14]/30 text-[#39FF14] hover:border-[#39FF14]/50 transition-all duration-300">
+                  <Shield className="w-4 h-4" />
+                  Admin
+                </button>
+              </Link>
+            )}
           </div>
 
           {/* Mobile toggle */}
@@ -106,6 +126,14 @@ export default function Layout({ children }) {
                     {link.label}
                   </button>
                 ))}
+                {isAdmin && (
+                  <Link to={createPageUrl('Admin')}>
+                    <button className="flex items-center gap-2 w-full px-4 py-3 rounded-lg bg-gradient-to-r from-[#39FF14]/10 to-[#00E5FF]/10 border border-[#39FF14]/30 text-[#39FF14]">
+                      <Shield className="w-4 h-4" />
+                      Admin
+                    </button>
+                  </Link>
+                )}
               </div>
             </motion.div>
           )}

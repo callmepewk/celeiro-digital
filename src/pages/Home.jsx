@@ -7,18 +7,21 @@ import TeachersSection from "../components/celeiro/TeachersSection";
 import ContactSection from "../components/celeiro/ContactSection";
 import Footer from "../components/celeiro/Footer";
 import CitySelector from "../components/celeiro/CitySelector";
+import AccessGate from "../components/celeiro/AccessGate";
 
 export default function Home() {
   return (
-    <div className="min-h-screen" style={{ backgroundColor: "#0a0a0a" }}>
-      <CitySelector />
-      <HeroSection />
-      <AboutSection />
-      <SpacesSection />
-      <CoursesSection />
-      <TeachersSection />
-      <ContactSection />
-      <Footer />
-    </div>
+    <AccessGate>
+      <div className="min-h-screen" style={{ backgroundColor: "#0a0a0a" }}>
+        <CitySelector />
+        <HeroSection />
+        <AboutSection />
+        <SpacesSection />
+        <CoursesSection />
+        <TeachersSection />
+        <ContactSection />
+        <Footer />
+      </div>
+    </AccessGate>
   );
 }
