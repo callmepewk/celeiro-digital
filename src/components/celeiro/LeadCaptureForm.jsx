@@ -41,18 +41,18 @@ export default function LeadCaptureForm({ onComplete }) {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-lg flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-lg flex items-center justify-center p-2 sm:p-4">
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="bg-[#0a0a0a] border border-white/20 rounded-2xl max-w-md w-full p-8"
+        className="bg-[#0a0a0a] border border-white/20 rounded-2xl max-w-md w-full p-4 sm:p-8 max-h-[95vh] overflow-y-auto"
       >
-        <div className="text-center mb-8">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-r from-[#39FF14] to-[#00E5FF] flex items-center justify-center mx-auto mb-4">
-            <Lock className="w-8 h-8 text-black" />
+        <div className="text-center mb-6 sm:mb-8">
+          <div className="w-12 sm:w-16 h-12 sm:h-16 rounded-2xl bg-gradient-to-r from-[#39FF14] to-[#00E5FF] flex items-center justify-center mx-auto mb-3 sm:mb-4">
+            <Lock className="w-6 sm:w-8 h-6 sm:h-8 text-black" />
           </div>
-          <h2 className="text-2xl font-bold text-white mb-2">Bem-vindo ao Celeiro Digital</h2>
-          <p className="text-gray-400">Preencha seus dados para continuar navegando</p>
+          <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">Bem-vindo ao Celeiro Digital</h2>
+          <p className="text-sm sm:text-base text-gray-400">Preencha seus dados para continuar navegando</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -121,7 +121,7 @@ export default function LeadCaptureForm({ onComplete }) {
           <Button
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-[#39FF14] to-[#00E5FF] text-black font-semibold text-base py-6"
+            className="w-full bg-gradient-to-r from-[#39FF14] to-[#00E5FF] text-black font-semibold text-sm sm:text-base py-4 sm:py-6"
           >
             {loading ? (
               <>

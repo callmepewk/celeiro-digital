@@ -22,7 +22,7 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contato" className="py-24 px-6 relative">
+    <section id="contato" className="py-16 sm:py-24 px-4 sm:px-6 relative">
       <div
         className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full blur-[180px] opacity-5"
         style={{ background: "radial-gradient(circle, #39FF14, transparent)" }}

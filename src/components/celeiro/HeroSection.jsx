@@ -31,12 +31,12 @@ export default function HeroSection() {
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
+      <div className="relative z-10 text-center px-4 sm:px-6 max-w-5xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="mb-6"
+          className="mb-4 sm:mb-6"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#39FF14]/30 bg-[#39FF14]/5 mb-8">
             <Sprout className="w-4 h-4 text-[#39FF14]" />
@@ -58,7 +58,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.2, ease: "easeOut" }}
-          className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6"
+          className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-4 sm:mb-6"
         >
           <span className="text-white">Celeiro</span>
           <br />
@@ -76,7 +76,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-          className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed"
+          className="text-base sm:text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-6 sm:mb-10 leading-relaxed px-2"
         >
           Alfabetização digital, formação tecnológica e geração de renda.
           <br className="hidden md:block" />
@@ -91,7 +91,7 @@ export default function HeroSection() {
         >
           <a
             href="#cursos"
-            className="group relative px-8 py-4 rounded-xl font-semibold text-black overflow-hidden transition-all duration-300"
+            className="group relative px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold text-sm sm:text-base text-black overflow-hidden transition-all duration-300"
             style={{ background: "linear-gradient(135deg, #39FF14, #00E5FF)" }}
           >
             <span className="relative z-10">Explorar Cursos</span>
@@ -99,7 +99,7 @@ export default function HeroSection() {
           </a>
           <a
             href="#sobre"
-            className="px-8 py-4 rounded-xl font-semibold text-white border border-white/20 hover:border-[#39FF14]/50 hover:bg-[#39FF14]/5 transition-all duration-300"
+            className="px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold text-sm sm:text-base text-white border border-white/20 hover:border-[#39FF14]/50 hover:bg-[#39FF14]/5 transition-all duration-300"
           >
             Conheça o Espaço
           </a>

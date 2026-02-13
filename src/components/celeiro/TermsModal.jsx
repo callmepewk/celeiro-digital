@@ -16,21 +16,21 @@ export default function TermsModal({ onAccept }) {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-lg flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-lg flex items-center justify-center p-2 sm:p-4">
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="bg-[#0a0a0a] border border-white/20 rounded-2xl max-w-3xl w-full max-h-[85vh] flex flex-col"
+        className="bg-[#0a0a0a] border border-white/20 rounded-2xl max-w-3xl w-full max-h-[90vh] sm:max-h-[85vh] flex flex-col"
       >
-        <div className="p-6 border-b border-white/10">
-          <h2 className="text-2xl font-bold text-white mb-2">Termos e Condições de Uso</h2>
-          <p className="text-gray-400 text-sm">Por favor, leia atentamente antes de continuar</p>
+        <div className="p-4 sm:p-6 border-b border-white/10">
+          <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">Termos e Condições de Uso</h2>
+          <p className="text-gray-400 text-xs sm:text-sm">Por favor, leia atentamente antes de continuar</p>
         </div>
 
         <div
           ref={contentRef}
           onScroll={handleScroll}
-          className="flex-1 overflow-y-auto p-6 space-y-6 text-gray-300 text-sm leading-relaxed"
+          className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 sm:space-y-6 text-gray-300 text-xs sm:text-sm leading-relaxed"
         >
           <section>
             <h3 className="text-lg font-semibold text-white mb-3">1. Aceitação dos Termos</h3>
@@ -103,22 +103,22 @@ export default function TermsModal({ onAccept }) {
           </div>
         </div>
 
-        <div className="p-6 border-t border-white/10">
+        <div className="p-4 sm:p-6 border-t border-white/10">
           {!scrolledToBottom ? (
             <div className="flex items-center justify-center gap-2 text-amber-500 mb-4">
-              <AlertCircle className="w-5 h-5" />
-              <p className="text-sm font-medium">Role até o final para aceitar os termos</p>
+              <AlertCircle className="w-4 sm:w-5 h-4 sm:h-5" />
+              <p className="text-xs sm:text-sm font-medium text-center">Role até o final para aceitar os termos</p>
             </div>
           ) : (
             <div className="flex items-center justify-center gap-2 text-[#39FF14] mb-4">
-              <CheckCircle className="w-5 h-5" />
-              <p className="text-sm font-medium">Você leu todos os termos</p>
+              <CheckCircle className="w-4 sm:w-5 h-4 sm:h-5" />
+              <p className="text-xs sm:text-sm font-medium">Você leu todos os termos</p>
             </div>
           )}
           <Button
             onClick={onAccept}
             disabled={!scrolledToBottom}
-            className="w-full bg-gradient-to-r from-[#39FF14] to-[#00E5FF] text-black font-semibold text-base py-6 disabled:opacity-30 disabled:cursor-not-allowed"
+            className="w-full bg-gradient-to-r from-[#39FF14] to-[#00E5FF] text-black font-semibold text-sm sm:text-base py-4 sm:py-6 disabled:opacity-30 disabled:cursor-not-allowed"
           >
             Li e Aceito os Termos e Condições
           </Button>

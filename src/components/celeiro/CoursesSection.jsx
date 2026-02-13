@@ -113,7 +113,7 @@ export default function CoursesSection() {
   const allCourses = [...pinnedCourses, ...regularCourses];
 
   return (
-    <section id="cursos" className="py-24 px-6 relative">
+    <section id="cursos" className="py-16 sm:py-24 px-4 sm:px-6 relative">
       {/* Subtle glow */}
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full blur-[200px] opacity-5"

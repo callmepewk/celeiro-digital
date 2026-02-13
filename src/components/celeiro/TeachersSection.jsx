@@ -29,7 +29,7 @@ const teachers = [
 
 export default function TeachersSection() {
   return (
-    <section id="professores" className="py-24 px-6 relative">
+    <section id="professores" className="py-16 sm:py-24 px-4 sm:px-6 relative">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

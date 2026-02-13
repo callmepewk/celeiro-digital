@@ -68,14 +68,14 @@ export default function CitySelector() {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 left-6 z-40 flex items-center gap-2 px-4 py-3 rounded-xl bg-[#0a0a0a]/90 backdrop-blur-xl border border-white/10 text-white hover:border-[#39FF14]/50 transition-all duration-300 shadow-lg"
+        className="fixed bottom-4 sm:bottom-6 left-4 sm:left-6 z-40 flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-3 rounded-xl bg-[#0a0a0a]/90 backdrop-blur-xl border border-white/10 text-white hover:border-[#39FF14]/50 transition-all duration-300 shadow-lg max-w-[calc(100vw-2rem)] sm:max-w-none"
       >
-        <MapPin className="w-4 h-4 text-[#39FF14]" />
-        <div className="text-left">
-          <p className="text-xs text-gray-400">Unidade</p>
-          <p className="text-sm font-semibold">{selectedCity.name} - {selectedCity.state}</p>
+        <MapPin className="w-3.5 sm:w-4 h-3.5 sm:h-4 text-[#39FF14] flex-shrink-0" />
+        <div className="text-left min-w-0 flex-1">
+          <p className="text-[10px] sm:text-xs text-gray-400">Unidade</p>
+          <p className="text-xs sm:text-sm font-semibold truncate">{selectedCity.name} - {selectedCity.state}</p>
         </div>
-        <ChevronDown className="w-4 h-4 text-gray-400" />
+        <ChevronDown className="w-3.5 sm:w-4 h-3.5 sm:h-4 text-gray-400 flex-shrink-0" />
       </button>
 
       <AnimatePresence>
@@ -84,7 +84,7 @@ export default function CitySelector() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-6"
+            className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6"
             onClick={() => setIsOpen(false)}
           >
             <motion.div
@@ -92,7 +92,7 @@ export default function CitySelector() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-[#0a0a0a] border border-white/10 rounded-2xl p-6 max-w-md w-full max-h-[80vh] overflow-y-auto"
+              className="bg-[#0a0a0a] border border-white/10 rounded-2xl p-4 sm:p-6 max-w-md w-full max-h-[85vh] overflow-y-auto"
             >
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-xl font-bold text-white">Selecione a Unidade</h3>

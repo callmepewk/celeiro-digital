@@ -16,33 +16,20 @@ export default function AccessGate({ children }) {
       const leadSubmitted = localStorage.getItem('celeiro_lead_submitted');
       const userEmail = localStorage.getItem('celeiro_user_email');
 
+      // Se não aceitou termos, mostra modal de termos
       if (!termsAccepted) {
         setShowTerms(true);
         return;
       }
 
-      if (leadSubmitted && userEmail) {
-        try {
-          const leads = await base44.entities.Lead.filter({ email: userEmail });
-          if (leads.length > 0) {
-            setIsReady(true);
-            return;
-          }
-        } catch (error) {
-          console.error('Error checking lead:', error);
-        }
+      // Se já preencheu o formulário antes (tem flag de submitted), libera acesso direto
+      if (leadSubmitted === 'true') {
+        setIsReady(true);
+        return;
       }
 
-      if (!leadSubmitted) {
-        const leads = await base44.entities.Lead.list();
-        if (leads.some(l => l.email === userEmail)) {
-          setShowLogin(true);
-        } else {
-          setShowLeadForm(true);
-        }
-      } else {
-        setIsReady(true);
-      }
+      // Se não tem flag de submitted, mostra formulário de cadastro
+      setShowLeadForm(true);
     }
     checkAccess();
   }, []);
