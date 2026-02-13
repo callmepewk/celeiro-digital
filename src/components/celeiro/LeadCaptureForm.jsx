@@ -6,6 +6,7 @@ import { Loader2, Lock, Eye, EyeOff } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 
 export default function LeadCaptureForm({ onComplete }) {
+  const [isReturningUser, setIsReturningUser] = useState(false);
   const [formData, setFormData] = useState({
     full_name: "",
     email: "",
@@ -51,8 +52,12 @@ export default function LeadCaptureForm({ onComplete }) {
           <div className="w-12 sm:w-16 h-12 sm:h-16 rounded-2xl bg-gradient-to-r from-[#39FF14] to-[#00E5FF] flex items-center justify-center mx-auto mb-3 sm:mb-4">
             <Lock className="w-6 sm:w-8 h-6 sm:h-8 text-black" />
           </div>
-          <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">Bem-vindo ao Celeiro Digital</h2>
-          <p className="text-sm sm:text-base text-gray-400">Preencha seus dados para continuar navegando</p>
+          <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">
+            {isReturningUser ? 'Bem-vindo de Volta' : 'Bem-vindo ao Celeiro Digital'}
+          </h2>
+          <p className="text-sm sm:text-base text-gray-400">
+            {isReturningUser ? 'Digite seu email para acessar' : 'Preencha seus dados para continuar navegando'}
+          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
