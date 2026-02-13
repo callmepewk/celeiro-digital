@@ -6,10 +6,12 @@ import CoursesSection from "../components/celeiro/CoursesSection";
 import TeachersSection from "../components/celeiro/TeachersSection";
 import ContactSection from "../components/celeiro/ContactSection";
 import Footer from "../components/celeiro/Footer";
+import CitySelector from "../components/celeiro/CitySelector";
 
 export default function Home() {
   return (
     <div className="min-h-screen" style={{ backgroundColor: "#0a0a0a" }}>
+      <CitySelector />
       <HeroSection />
       <AboutSection />
       <SpacesSection />

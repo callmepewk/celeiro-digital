@@ -7,19 +7,23 @@ const teachers = [
     name: "Jauru Nunes de Freitas",
     role: "Fundador & Educador",
     description:
-      "Médico dermatologista formado pela UFRGS e Università La Sapienza de Roma. Idealizador do Celeiro Digital, lidera a missão de democratizar a educação digital em Porto Firme.",
+      "Médico dermatologista formado pela UFRGS e Università La Sapienza de Roma. Idealizador do Celeiro Digital, trabalha com eficiência para democratizar a educação digital.",
     icon: Sprout,
     color: "#39FF14",
     image: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/698e9132814b2809b199a498/d2d5b4702_image.png",
+    instagram: "@dr.jauru",
+    linkedin: "https://www.linkedin.com/in/jauru-de-freitas/",
   },
   {
     name: "Pedro Henrique Brezolin de Freitas",
     role: "CTO & Especialista em Tecnologia",
     description:
-      "Graduando em Engenharia de Software e Engenharia Genética. Computer Science for Business Professionals (Harvard), Gestor de Tráfego Pago (Pedro Sobral) e Neurociência (IFSC). Transforma tecnologia em soluções educacionais.",
+      "Graduando em Engenharia de Software e Engenharia Genética. Computer Science (Harvard), Tráfego Pago e Neurociência (IFSC). Transforma sonhos em realidades e ideias em lucratividade.",
     icon: Megaphone,
     color: "#00E5FF",
     image: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/698e9132814b2809b199a498/ccb685b6e_image.png",
+    instagram: "@callmepewk",
+    linkedin: "https://www.linkedin.com/in/pedro-henrique-brezolin-de-freitas-36194a2b8/",
   },
 ];
 
@@ -96,16 +100,22 @@ export default function TeachersSection() {
                   {teacher.description}
                 </p>
                 <div className="flex gap-3 mt-5">
-                  <button
-                    className="w-9 h-9 rounded-lg flex items-center justify-center border border-white/10 hover:border-white/30 transition-colors duration-300"
+                  <a
+                    href={`https://instagram.com/${teacher.instagram.replace('@', '')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-9 h-9 rounded-lg flex items-center justify-center border border-white/10 hover:border-white/30 hover:border-[#E4405F]/50 transition-colors duration-300 group"
                   >
-                    <Instagram className="w-4 h-4 text-gray-400" />
-                  </button>
-                  <button
-                    className="w-9 h-9 rounded-lg flex items-center justify-center border border-white/10 hover:border-white/30 transition-colors duration-300"
+                    <Instagram className="w-4 h-4 text-gray-400 group-hover:text-[#E4405F]" />
+                  </a>
+                  <a
+                    href={teacher.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-9 h-9 rounded-lg flex items-center justify-center border border-white/10 hover:border-white/30 hover:border-[#0077B5]/50 transition-colors duration-300 group"
                   >
-                    <Linkedin className="w-4 h-4 text-gray-400" />
-                  </button>
+                    <Linkedin className="w-4 h-4 text-gray-400 group-hover:text-[#0077B5]" />
+                  </a>
                 </div>
               </div>
             </motion.div>

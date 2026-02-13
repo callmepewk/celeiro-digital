@@ -40,10 +40,18 @@ export default function HeroSection() {
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#39FF14]/30 bg-[#39FF14]/5 mb-8">
             <Sprout className="w-4 h-4 text-[#39FF14]" />
-            <span className="text-[#39FF14] text-sm font-medium tracking-wider uppercase">
+            <span className="text-[#39FF14] text-sm font-medium tracking-wider uppercase" id="hero-city-badge">
               Porto Firme — MG
             </span>
           </div>
+          <script dangerouslySetInnerHTML={{__html: `
+            const stored = localStorage.getItem('celeiro_city');
+            if (stored) {
+              const city = JSON.parse(stored);
+              const badge = document.getElementById('hero-city-badge');
+              if (badge) badge.textContent = city.name + ' — ' + city.state;
+            }
+          `}} />
         </motion.div>
 
         <motion.h1

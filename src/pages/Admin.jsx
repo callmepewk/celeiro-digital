@@ -3,10 +3,11 @@ import { base44 } from "@/api/base44Client";
 import { useQuery } from "@tanstack/react-query";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { BarChart3, Users, BookOpen, Download, Loader2 } from "lucide-react";
+import { BarChart3, Users, BookOpen, Download, Loader2, MapPin } from "lucide-react";
 import SeoMetrics from "../components/admin/SeoMetrics";
 import UsersTable from "../components/admin/UsersTable";
 import CourseManager from "../components/admin/CourseManager";
+import CityManager from "../components/admin/CityManager";
 import { createPageUrl } from "../utils";
 import { Link } from "react-router-dom";
 
@@ -51,6 +52,13 @@ export default function Admin() {
   const { data: courses } = useQuery({
     queryKey: ['courses'],
     queryFn: () => base44.entities.Course.list(),
+    initialData: [],
+    enabled: !!currentUser,
+  });
+
+  const { data: cities } = useQuery({
+    queryKey: ['cities'],
+    queryFn: () => base44.entities.City.list(),
     initialData: [],
     enabled: !!currentUser,
   });
@@ -130,6 +138,10 @@ export default function Admin() {
               <BookOpen className="w-4 h-4 mr-2" />
               Cursos
             </TabsTrigger>
+            <TabsTrigger value="cities" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#39FF14] data-[state=active]:to-[#00E5FF] data-[state=active]:text-black">
+              <MapPin className="w-4 h-4 mr-2" />
+              Unidades
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="seo">
@@ -142,6 +154,10 @@ export default function Admin() {
 
           <TabsContent value="courses">
             <CourseManager courses={courses} />
+          </TabsContent>
+
+          <TabsContent value="cities">
+            <CityManager cities={cities} />
           </TabsContent>
         </Tabs>
       </div>
