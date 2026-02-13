@@ -4,22 +4,22 @@ import { Sprout, Megaphone, Linkedin, Instagram } from "lucide-react";
 
 const teachers = [
   {
-    name: "Fundador",
-    role: "Professor Principal",
+    name: "Jauru Nunes de Freitas",
+    role: "Fundador & Educador",
     description:
-      "Idealizador do Celeiro Digital. Apaixonado por tecnologia e educação, lidera a missão de alfabetização digital em Porto Firme.",
+      "Médico dermatologista formado pela UFRGS e Università La Sapienza de Roma. Idealizador do Celeiro Digital, lidera a missão de democratizar a educação digital em Porto Firme.",
     icon: Sprout,
     color: "#39FF14",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80",
+    image: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/698e9132814b2809b199a498/d2d5b4702_image.png",
   },
   {
-    name: "Professor de Marketing",
-    role: "Especialista em Marketing Digital",
+    name: "Pedro Henrique Brezolin de Freitas",
+    role: "CTO & Especialista em Tecnologia",
     description:
-      "Expert em tráfego pago, estratégias de conteúdo e growth hacking. Transforma ideias em resultados digitais.",
+      "Graduando em Engenharia de Software e Engenharia Genética. Computer Science for Business Professionals (Harvard), Gestor de Tráfego Pago (Pedro Sobral) e Neurociência (IFSC). Transforma tecnologia em soluções educacionais.",
     icon: Megaphone,
     color: "#00E5FF",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80",
+    image: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/698e9132814b2809b199a498/ccb685b6e_image.png",
   },
 ];
 

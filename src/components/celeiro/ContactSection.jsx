@@ -1,8 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { MapPin, Mail, Phone, Send } from "lucide-react";
+import { MapPin, Mail, Phone, Send, Loader2, CheckCircle } from "lucide-react";
+import { base44 } from "@/api/base44Client";
 
 export default function ContactSection() {
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [status, setStatus] = useState({ loading: false, success: false, error: "" });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus({ loading: true, success: false, error: "" });
+    
+    try {
+      await base44.functions.invoke('sendContactEmail', formData);
+      setStatus({ loading: false, success: true, error: "" });
+      setFormData({ name: "", email: "", message: "" });
+      setTimeout(() => setStatus({ loading: false, success: false, error: "" }), 3000);
+    } catch (error) {
+      setStatus({ loading: false, success: false, error: "Erro ao enviar mensagem" });
+    }
+  };
+
   return (
     <section id="contato" className="py-24 px-6 relative">
       <div
@@ -49,13 +67,13 @@ export default function ContactSection() {
               {
                 icon: Mail,
                 title: "E-mail",
-                text: "contato@celeirodigital.com.br",
+                text: "pedro_hbfreitas@hotmail.com",
                 color: "#00E5FF",
               },
               {
                 icon: Phone,
-                title: "Telefone",
-                text: "(31) 9 0000-0000",
+                title: "Telefones",
+                text: "(54) 99155-4136 / (21) 98034-3873",
                 color: "#39FF14",
               },
             ].map((item) => (
@@ -84,30 +102,58 @@ export default function ContactSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
             className="space-y-4"
-            onSubmit={(e) => e.preventDefault()}
+            onSubmit={handleSubmit}
           >
             <input
               type="text"
               placeholder="Seu nome"
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              required
               className="w-full px-5 py-4 rounded-xl bg-white/[0.04] border border-white/10 text-white placeholder:text-gray-500 focus:outline-none focus:border-[#39FF14]/50 transition-colors duration-300"
             />
             <input
               type="email"
               placeholder="Seu e-mail"
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              required
               className="w-full px-5 py-4 rounded-xl bg-white/[0.04] border border-white/10 text-white placeholder:text-gray-500 focus:outline-none focus:border-[#39FF14]/50 transition-colors duration-300"
             />
             <textarea
               rows={4}
               placeholder="Sua mensagem"
+              value={formData.message}
+              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+              required
               className="w-full px-5 py-4 rounded-xl bg-white/[0.04] border border-white/10 text-white placeholder:text-gray-500 focus:outline-none focus:border-[#39FF14]/50 transition-colors duration-300 resize-none"
             />
+            {status.error && (
+              <p className="text-red-400 text-sm">{status.error}</p>
+            )}
+            {status.success && (
+              <div className="flex items-center gap-2 text-[#39FF14] text-sm">
+                <CheckCircle className="w-4 h-4" />
+                <span>Mensagem enviada com sucesso!</span>
+              </div>
+            )}
             <button
               type="submit"
-              className="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-semibold text-black transition-all duration-300 hover:opacity-90"
+              disabled={status.loading}
+              className="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-semibold text-black transition-all duration-300 hover:opacity-90 disabled:opacity-50"
               style={{ background: "linear-gradient(135deg, #39FF14, #00E5FF)" }}
             >
-              <Send className="w-4 h-4" />
-              Enviar Mensagem
+              {status.loading ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Enviando...
+                </>
+              ) : (
+                <>
+                  <Send className="w-4 h-4" />
+                  Enviar Mensagem
+                </>
+              )}
             </button>
           </motion.form>
         </div>

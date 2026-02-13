@@ -1,8 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Monitor, Shield, TrendingUp, Megaphone, Film, ArrowRight } from "lucide-react";
+import { base44 } from "@/api/base44Client";
+import { useQuery } from "@tanstack/react-query";
 
-const courses = [
+const defaultCourses = [
   {
     icon: Monitor,
     title: "Alfabetização Digital",
@@ -51,6 +53,29 @@ const courses = [
 ];
 
 export default function CoursesSection() {
+  const { data: dbCourses } = useQuery({
+    queryKey: ['activeCourses'],
+    queryFn: async () => {
+      const courses = await base44.entities.Course.filter({ is_active: true });
+      return courses;
+    },
+    initialData: [],
+  });
+
+  const allCourses = [
+    ...defaultCourses,
+    ...dbCourses.map(course => ({
+      icon: course.type === 'video' ? Film : Monitor,
+      title: course.name,
+      audience: course.category || "Todos",
+      description: course.description,
+      color: course.type === 'video' ? "#00E5FF" : "#39FF14",
+      tag: course.type,
+      redirect_url: course.redirect_url,
+      image: course.image_url
+    }))
+  ];
+
   return (
     <section id="cursos" className="py-24 px-6 relative">
       {/* Subtle glow */}
@@ -80,15 +105,22 @@ export default function CoursesSection() {
         </motion.div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {courses.map((course, i) => (
+          {allCourses.map((course, i) => (
             <motion.div
               key={course.title}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="group relative rounded-2xl border border-white/10 bg-white/[0.02] p-7 hover:border-white/20 transition-all duration-500 flex flex-col"
+              className="group relative rounded-2xl border border-white/10 bg-white/[0.02] hover:border-white/20 transition-all duration-500 flex flex-col overflow-hidden cursor-pointer"
+              onClick={() => course.redirect_url && window.open(course.redirect_url, '_blank')}
             >
+              {course.image && (
+                <div className="w-full aspect-video overflow-hidden">
+                  <img src={course.image} alt={course.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                </div>
+              )}
+              <div className="p-7">
               <div
                 className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                 style={{
@@ -123,6 +155,7 @@ export default function CoursesSection() {
                   <span>Saiba mais</span>
                   <ArrowRight className="w-4 h-4" />
                 </div>
+              </div>
               </div>
             </motion.div>
           ))}

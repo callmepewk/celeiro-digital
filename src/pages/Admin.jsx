@@ -1,0 +1,150 @@
+import React, { useEffect, useState } from "react";
+import { base44 } from "@/api/base44Client";
+import { useQuery } from "@tanstack/react-query";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import { BarChart3, Users, BookOpen, Download, Loader2 } from "lucide-react";
+import SeoMetrics from "../components/admin/SeoMetrics";
+import UsersTable from "../components/admin/UsersTable";
+import CourseManager from "../components/admin/CourseManager";
+import { createPageUrl } from "../utils";
+import { Link } from "react-router-dom";
+
+export default function Admin() {
+  const [currentUser, setCurrentUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function checkAuth() {
+      try {
+        const user = await base44.auth.me();
+        if (user?.role !== 'admin') {
+          window.location.href = createPageUrl('Home');
+        } else {
+          setCurrentUser(user);
+        }
+      } catch (error) {
+        window.location.href = createPageUrl('Home');
+      } finally {
+        setLoading(false);
+      }
+    }
+    checkAuth();
+  }, []);
+
+  const { data: seoMetrics } = useQuery({
+    queryKey: ['seoMetrics'],
+    queryFn: async () => {
+      const res = await base44.functions.invoke('getSeoMetrics');
+      return res.data;
+    },
+    enabled: !!currentUser,
+  });
+
+  const { data: users } = useQuery({
+    queryKey: ['users'],
+    queryFn: () => base44.entities.User.list(),
+    initialData: [],
+    enabled: !!currentUser,
+  });
+
+  const { data: courses } = useQuery({
+    queryKey: ['courses'],
+    queryFn: () => base44.entities.Course.list(),
+    initialData: [],
+    enabled: !!currentUser,
+  });
+
+  const exportAllReports = () => {
+    const timestamp = new Date().toISOString().split('T')[0];
+    
+    // SEO Report
+    const seoReport = JSON.stringify(seoMetrics, null, 2);
+    const seoBlob = new Blob([seoReport], { type: 'application/json' });
+    const seoLink = document.createElement('a');
+    seoLink.href = URL.createObjectURL(seoBlob);
+    seoLink.download = `relatorio-seo-${timestamp}.json`;
+    seoLink.click();
+
+    // Users Report
+    setTimeout(() => {
+      const usersData = users.map(u => ({
+        email: u.email,
+        nome: u.full_name,
+        role: u.role,
+        criado_em: u.created_date
+      }));
+      const usersBlob = new Blob([JSON.stringify(usersData, null, 2)], { type: 'application/json' });
+      const usersLink = document.createElement('a');
+      usersLink.href = URL.createObjectURL(usersBlob);
+      usersLink.download = `relatorio-usuarios-${timestamp}.json`;
+      usersLink.click();
+    }, 500);
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">
+        <Loader2 className="w-8 h-8 text-[#39FF14] animate-spin" />
+      </div>
+    );
+  }
+
+  if (!currentUser) return null;
+
+  return (
+    <div className="min-h-screen bg-[#0a0a0a] py-8 px-6">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h1 className="text-3xl font-bold text-white mb-2">Painel Admin</h1>
+            <p className="text-gray-400">Bem-vindo, {currentUser.full_name}</p>
+          </div>
+          <div className="flex gap-3">
+            <Button
+              onClick={exportAllReports}
+              className="bg-white/5 border border-white/10 text-white hover:bg-white/10"
+            >
+              <Download className="w-4 h-4 mr-2" />
+              Exportar Todos os Relatórios
+            </Button>
+            <Link to={createPageUrl('Home')}>
+              <Button variant="outline" className="border-white/10 text-white">
+                Voltar ao Site
+              </Button>
+            </Link>
+          </div>
+        </div>
+
+        <Tabs defaultValue="seo" className="space-y-6">
+          <TabsList className="bg-white/5 border border-white/10">
+            <TabsTrigger value="seo" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#39FF14] data-[state=active]:to-[#00E5FF] data-[state=active]:text-black">
+              <BarChart3 className="w-4 h-4 mr-2" />
+              Métricas SEO
+            </TabsTrigger>
+            <TabsTrigger value="users" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#39FF14] data-[state=active]:to-[#00E5FF] data-[state=active]:text-black">
+              <Users className="w-4 h-4 mr-2" />
+              Usuários
+            </TabsTrigger>
+            <TabsTrigger value="courses" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#39FF14] data-[state=active]:to-[#00E5FF] data-[state=active]:text-black">
+              <BookOpen className="w-4 h-4 mr-2" />
+              Cursos
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="seo">
+            <SeoMetrics metrics={seoMetrics} />
+          </TabsContent>
+
+          <TabsContent value="users">
+            <UsersTable users={users} />
+          </TabsContent>
+
+          <TabsContent value="courses">
+            <CourseManager courses={courses} />
+          </TabsContent>
+        </Tabs>
+      </div>
+    </div>
+  );
+}
