@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Monitor, Shield, TrendingUp, Megaphone, Film, ArrowRight } from "lucide-react";
+import { Monitor, Shield, TrendingUp, Megaphone, Film, ArrowRight, Pin, Edit2, Trash2 } from "lucide-react";
 import { base44 } from "@/api/base44Client";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import CourseEditModal from "../admin/CourseEditModal";
 
 const defaultCourses = [
   {
@@ -53,6 +54,22 @@ const defaultCourses = [
 ];
 
 export default function CoursesSection() {
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [editingCourse, setEditingCourse] = useState(null);
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    async function checkAdmin() {
+      try {
+        const user = await base44.auth.me();
+        setIsAdmin(user?.role === 'admin');
+      } catch (error) {
+        setIsAdmin(false);
+      }
+    }
+    checkAdmin();
+  }, []);
+
   const { data: dbCourses } = useQuery({
     queryKey: ['activeCourses'],
     queryFn: async () => {
@@ -62,19 +79,38 @@ export default function CoursesSection() {
     initialData: [],
   });
 
-  const allCourses = [
-    ...defaultCourses,
-    ...dbCourses.map(course => ({
-      icon: course.type === 'video' ? Film : Monitor,
-      title: course.name,
-      audience: course.category || "Todos",
-      description: course.description,
-      color: course.type === 'video' ? "#00E5FF" : "#39FF14",
-      tag: course.type,
-      redirect_url: course.redirect_url,
-      image: course.image_url
-    }))
-  ];
+  const handleTogglePin = async (course) => {
+    try {
+      await base44.entities.Course.update(course.id, { is_pinned: !course.is_pinned });
+      queryClient.invalidateQueries({ queryKey: ['activeCourses'] });
+    } catch (error) {
+      alert('Erro ao fixar/desafixar curso');
+    }
+  };
+
+  const handleDelete = async (courseId) => {
+    if (!confirm('Tem certeza que deseja excluir este curso?')) return;
+    try {
+      await base44.entities.Course.delete(courseId);
+      queryClient.invalidateQueries({ queryKey: ['activeCourses'] });
+    } catch (error) {
+      alert('Erro ao excluir curso');
+    }
+  };
+
+  const dbCoursesFormatted = dbCourses.map(course => ({
+    ...course,
+    icon: course.type === 'video' ? Film : Monitor,
+    title: course.name,
+    audience: course.category || "Todos",
+    color: course.type === 'video' ? "#00E5FF" : "#39FF14",
+    tag: course.type,
+    image: course.image_url
+  }));
+
+  const pinnedCourses = dbCoursesFormatted.filter(c => c.is_pinned);
+  const regularCourses = [...defaultCourses, ...dbCoursesFormatted.filter(c => !c.is_pinned)];
+  const allCourses = [...pinnedCourses, ...regularCourses];
 
   return (
     <section id="cursos" className="py-24 px-6 relative">
@@ -107,20 +143,72 @@ export default function CoursesSection() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {allCourses.map((course, i) => (
             <motion.div
-              key={course.title}
+              key={course.id || course.title}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="group relative rounded-2xl border border-white/10 bg-white/[0.02] hover:border-white/20 transition-all duration-500 flex flex-col overflow-hidden cursor-pointer"
-              onClick={() => course.redirect_url && window.open(course.redirect_url, '_blank')}
+              className={`group relative rounded-2xl border flex flex-col overflow-hidden ${
+                course.is_pinned 
+                  ? 'border-[#39FF14]/50 bg-gradient-to-br from-[#39FF14]/10 via-white/[0.02] to-[#00E5FF]/10 shadow-lg shadow-[#39FF14]/20' 
+                  : 'border-white/10 bg-white/[0.02] hover:border-white/20'
+              } transition-all duration-500 ${course.redirect_url ? 'cursor-pointer' : ''}`}
+              onClick={() => course.redirect_url && !isAdmin && window.open(course.redirect_url, '_blank')}
+              animate={course.is_pinned ? { 
+                boxShadow: [
+                  '0 0 20px rgba(57,255,20,0.2)',
+                  '0 0 40px rgba(0,229,255,0.3)',
+                  '0 0 20px rgba(57,255,20,0.2)'
+                ]
+              } : {}}
+              transition={course.is_pinned ? { duration: 3, repeat: Infinity, ease: "easeInOut" } : {}}
             >
               {course.image && (
-                <div className="w-full aspect-video overflow-hidden">
+                <div className="w-full aspect-video overflow-hidden relative">
                   <img src={course.image} alt={course.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  {course.is_pinned && (
+                    <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-gradient-to-r from-[#39FF14] to-[#00E5FF] flex items-center justify-center">
+                      <Pin className="w-4 h-4 text-black" />
+                    </div>
+                  )}
                 </div>
               )}
-              <div className="p-7">
+              <div className="p-7 flex-1 flex flex-col">
+                {isAdmin && course.id && (
+                  <div className="flex gap-1 mb-3 -mt-2">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleTogglePin(course);
+                      }}
+                      className={`p-1.5 rounded-lg transition-all ${
+                        course.is_pinned 
+                          ? 'bg-[#39FF14]/20 text-[#39FF14] hover:bg-[#39FF14]/30' 
+                          : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-[#39FF14]'
+                      }`}
+                    >
+                      <Pin className="w-3.5 h-3.5" />
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setEditingCourse(course);
+                      }}
+                      className="p-1.5 rounded-lg bg-white/5 text-gray-400 hover:bg-white/10 hover:text-[#00E5FF] transition-all"
+                    >
+                      <Edit2 className="w-3.5 h-3.5" />
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDelete(course.id);
+                      }}
+                      className="p-1.5 rounded-lg bg-white/5 text-gray-400 hover:bg-red-500/20 hover:text-red-400 transition-all"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                )}
               <div
                 className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                 style={{
@@ -161,6 +249,14 @@ export default function CoursesSection() {
           ))}
         </div>
       </div>
+
+      {editingCourse && (
+        <CourseEditModal
+          course={editingCourse}
+          open={!!editingCourse}
+          onClose={() => setEditingCourse(null)}
+        />
+      )}
     </section>
   );
 }

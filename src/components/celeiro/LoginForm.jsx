@@ -5,13 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Loader2, Lock, Eye, EyeOff } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 
-export default function LeadCaptureForm({ onComplete }) {
-  const [formData, setFormData] = useState({
-    full_name: "",
-    email: "",
-    phone: "",
-    password: ""
-  });
+export default function LoginForm({ onSuccess }) {
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -22,19 +17,17 @@ export default function LeadCaptureForm({ onComplete }) {
     setError("");
 
     try {
-      await base44.entities.Lead.create({
-        full_name: formData.full_name,
-        email: formData.email,
-        phone: formData.phone,
-        accepted_terms: true,
-        accepted_at: new Date().toISOString(),
-      });
-
-      localStorage.setItem('celeiro_lead_submitted', 'true');
-      localStorage.setItem('celeiro_user_email', formData.email);
-      onComplete();
+      const leads = await base44.entities.Lead.filter({ email: formData.email });
+      
+      if (leads.length > 0) {
+        localStorage.setItem('celeiro_user_email', formData.email);
+        localStorage.setItem('celeiro_lead_submitted', 'true');
+        onSuccess();
+      } else {
+        setError('Email não encontrado. Cadastre-se primeiro.');
+      }
     } catch (err) {
-      setError('Erro ao salvar seus dados. Tente novamente.');
+      setError('Erro ao fazer login. Tente novamente.');
     } finally {
       setLoading(false);
     }
@@ -51,24 +44,13 @@ export default function LeadCaptureForm({ onComplete }) {
           <div className="w-16 h-16 rounded-2xl bg-gradient-to-r from-[#39FF14] to-[#00E5FF] flex items-center justify-center mx-auto mb-4">
             <Lock className="w-8 h-8 text-black" />
           </div>
-          <h2 className="text-2xl font-bold text-white mb-2">Bem-vindo ao Celeiro Digital</h2>
-          <p className="text-gray-400">Preencha seus dados para continuar navegando</p>
+          <h2 className="text-2xl font-bold text-white mb-2">Bem-vindo de Volta</h2>
+          <p className="text-gray-400">Entre com seu email para continuar</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="text-gray-400 text-sm mb-2 block">Nome Completo *</label>
-            <Input
-              value={formData.full_name}
-              onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
-              required
-              className="bg-white/[0.04] border-white/10 text-white"
-              placeholder="Seu nome completo"
-            />
-          </div>
-
-          <div>
-            <label className="text-gray-400 text-sm mb-2 block">Email *</label>
+            <label className="text-gray-400 text-sm mb-2 block">Email</label>
             <Input
               type="email"
               value={formData.email}
@@ -80,28 +62,15 @@ export default function LeadCaptureForm({ onComplete }) {
           </div>
 
           <div>
-            <label className="text-gray-400 text-sm mb-2 block">Telefone *</label>
-            <Input
-              type="tel"
-              value={formData.phone}
-              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-              required
-              className="bg-white/[0.04] border-white/10 text-white"
-              placeholder="(00) 00000-0000"
-            />
-          </div>
-
-          <div>
-            <label className="text-gray-400 text-sm mb-2 block">Senha *</label>
+            <label className="text-gray-400 text-sm mb-2 block">Senha</label>
             <div className="relative">
               <Input
                 type={showPassword ? "text" : "password"}
                 value={formData.password}
                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 required
-                minLength={6}
                 className="bg-white/[0.04] border-white/10 text-white pr-10"
-                placeholder="Mínimo 6 caracteres"
+                placeholder="Sua senha"
               />
               <button
                 type="button"
@@ -111,7 +80,6 @@ export default function LeadCaptureForm({ onComplete }) {
                 {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
             </div>
-            <p className="text-xs text-gray-500 mt-1">Sua senha não será armazenada publicamente</p>
           </div>
 
           {error && (
@@ -126,16 +94,16 @@ export default function LeadCaptureForm({ onComplete }) {
             {loading ? (
               <>
                 <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                Processando...
+                Entrando...
               </>
             ) : (
-              'Continuar para o Site'
+              'Entrar'
             )}
           </Button>
         </form>
 
         <p className="text-xs text-gray-500 text-center mt-6">
-          Seus dados estão protegidos pela LGPD e serão utilizados apenas para fins educacionais
+          Seus dados estão protegidos pela LGPD
         </p>
       </motion.div>
     </div>
