@@ -71,10 +71,10 @@ export default function Layout({ children }) {
         <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
           <button
             onClick={() => handleNavClick("#")}
-            className="flex items-center gap-2.5 group"
+            className="flex items-center gap-2 group"
           >
-            <Sprout className="w-6 h-6 text-[#39FF14] group-hover:scale-110 transition-transform duration-300" />
-            <span className="text-white font-bold text-lg tracking-tight">
+            <Sprout className="w-5 h-5 sm:w-6 sm:h-6 text-[#39FF14] group-hover:scale-110 transition-transform duration-300" />
+            <span className="text-white font-bold text-base sm:text-lg tracking-tight">
               Celeiro
               <span className="text-[#00E5FF]"> Digital</span>
             </span>
