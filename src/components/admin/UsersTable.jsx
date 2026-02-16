@@ -3,35 +3,35 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Download } from "lucide-react";
+import { Download, FileText } from "lucide-react";
 import { format } from "date-fns";
+import { base44 } from "@/api/base44Client";
 
 export default function UsersTable({ users }) {
-  const exportUsers = () => {
-    const csvContent = [
-      ['Email', 'Nome', 'Role', 'Data de Criação'].join(','),
-      ...users.map(u => [
-        u.email,
-        u.full_name || '',
-        u.role,
-        format(new Date(u.created_date), 'dd/MM/yyyy')
-      ].join(','))
-    ].join('\n');
-
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = `usuarios-celeiro-digital-${format(new Date(), 'yyyy-MM-dd')}.csv`;
-    link.click();
+  const exportPDF = async () => {
+    try {
+      const { data: pdfBlob } = await base44.functions.invoke('exportUsersPDF', { users });
+      const blob = new Blob([pdfBlob], { type: 'application/pdf' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `relatorio-usuarios-${format(new Date(), 'yyyy-MM-dd')}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove();
+    } catch (error) {
+      alert('Erro ao gerar PDF: ' + error.message);
+    }
   };
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <h3 className="text-xl font-bold text-white">Usuários</h3>
-        <Button onClick={exportUsers} variant="outline" className="border-white/10 text-white">
-          <Download className="w-4 h-4 mr-2" />
-          Exportar CSV
+        <Button onClick={exportPDF} className="bg-gradient-to-r from-[#39FF14] to-[#00E5FF] text-black font-semibold w-full sm:w-auto">
+          <FileText className="w-4 h-4 mr-2" />
+          Exportar PDF
         </Button>
       </div>
 
