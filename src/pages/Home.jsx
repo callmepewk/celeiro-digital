@@ -4,6 +4,10 @@ import AboutSection from "../components/celeiro/AboutSection";
 import SpacesSection from "../components/celeiro/SpacesSection";
 import CoursesSection from "../components/celeiro/CoursesSection";
 import TeachersSection from "../components/celeiro/TeachersSection";
+import OperatingHoursSection from "../components/celeiro/OperatingHoursSection";
+import SubscriptionPlans from "../components/celeiro/SubscriptionPlans";
+import AgencySection from "../components/celeiro/AgencySection";
+import QRCodeSection from "../components/celeiro/QRCodeSection";
 import ContactSection from "../components/celeiro/ContactSection";
 import Footer from "../components/celeiro/Footer";
 import CitySelector from "../components/celeiro/CitySelector";
@@ -19,6 +23,10 @@ export default function Home() {
         <SpacesSection />
         <CoursesSection />
         <TeachersSection />
+        <OperatingHoursSection />
+        <SubscriptionPlans />
+        <AgencySection />
+        <QRCodeSection />
         <ContactSection />
         <Footer />
       </div>

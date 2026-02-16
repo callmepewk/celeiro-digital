@@ -47,7 +47,13 @@ export default function StudentLogin({ onSuccess }) {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-lg flex items-center justify-center p-2 sm:p-4">
+    <div className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-lg flex flex-col items-center justify-center p-2 sm:p-4">
+      <button
+        onClick={() => window.history.back()}
+        className="absolute top-4 left-4 px-3 py-2 text-gray-400 hover:text-white transition-colors"
+      >
+        ← Voltar
+      </button>
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
