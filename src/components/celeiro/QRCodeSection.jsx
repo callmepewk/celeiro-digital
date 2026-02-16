@@ -2,41 +2,24 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Download, Copy, Check } from "lucide-react";
-import QRCode from "qrcode";
 
 export default function QRCodeSection() {
   const [qrCode, setQrCode] = useState(null);
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    async function generateQR() {
-      try {
-        const url = window.location.origin;
-        const qr = await QRCode.toDataURL(url, {
-          errorCorrectionLevel: 'H',
-          type: 'image/webp',
-          quality: 0.95,
-          margin: 1,
-          width: 300,
-          color: {
-            dark: '#FFFFFF',
-            light: '#0a0a0a'
-          }
-        });
-        setQrCode(qr);
-      } catch (error) {
-        console.error('Erro ao gerar QR code:', error);
-      }
-    }
-    generateQR();
+    const url = window.location.origin;
+    // Usar serviço de QR code gratuito
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(url)}`;
+    setQrCode(qrUrl);
   }, []);
 
-  const downloadQR = async (format = 'png') => {
+  const downloadQR = async () => {
     if (!qrCode) return;
     
     const link = document.createElement('a');
     link.href = qrCode;
-    link.download = `celeiro-digital-qr.${format}`;
+    link.download = 'celeiro-digital-qr.png';
     link.click();
   };
 
@@ -44,22 +27,13 @@ export default function QRCodeSection() {
     if (!qrCode) return;
     
     try {
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-      const img = new Image();
-      img.onload = () => {
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
-        canvas.toBlob(blob => {
-          navigator.clipboard.write([
-            new ClipboardItem({ 'image/png': blob })
-          ]);
-          setCopied(true);
-          setTimeout(() => setCopied(false), 2000);
-        });
-      };
-      img.src = qrCode;
+      const response = await fetch(qrCode);
+      const blob = await response.blob();
+      navigator.clipboard.write([
+        new ClipboardItem({ 'image/png': blob })
+      ]);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
     } catch (error) {
       console.error('Erro ao copiar:', error);
     }
