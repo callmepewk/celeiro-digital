@@ -73,7 +73,7 @@ export default function OperatingHoursSection() {
   };
 
   return (
-    <section className="py-20 px-6 bg-gradient-to-b from-transparent to-white/[0.02]" id="funcionamento">
+    <section className="py-20 px-6 bg-gradient-to-b from-transparent to-white/[0.02]" id="horarios">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
