@@ -18,18 +18,18 @@ export default function AdminLogin({ onSuccess }) {
     setError("");
 
     try {
-      const user = await base44.auth.me();
+      const ADMIN_EMAILS = ['pedro_hbfreitas@hotmail.com'];
       
-      if (user?.role === 'admin' && user?.email === email) {
-        // Verificação simples - em produção seria mais robusta
+      if (ADMIN_EMAILS.includes(email)) {
         localStorage.setItem('celeiro_admin_token', 'true');
         localStorage.setItem('celeiro_admin_email', email);
+        localStorage.setItem('celeiro_user_email', email);
         onSuccess();
       } else {
-        setError('Acesso negado. Você não é administrador.');
+        setError('Email não autorizado como administrador.');
       }
     } catch (err) {
-      setError('Email ou senha incorretos.');
+      setError('Erro ao processar acesso.');
     } finally {
       setLoading(false);
     }

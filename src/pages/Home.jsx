@@ -2,8 +2,8 @@ import React from "react";
 import HeroSection from "../components/celeiro/HeroSection";
 import AboutSection from "../components/celeiro/AboutSection";
 import SpacesSection from "../components/celeiro/SpacesSection";
-import CoursesSection from "../components/celeiro/CoursesSection";
-import TeachersSection from "../components/celeiro/TeachersSection";
+import EscolaSection from "../components/celeiro/EscolaSection";
+import QuemSomos from "../components/celeiro/QuemSomos";
 import OperatingHoursSection from "../components/celeiro/OperatingHoursSection";
 import SubscriptionPlans from "../components/celeiro/SubscriptionPlans";
 import AgencySection from "../components/celeiro/AgencySection";
@@ -21,8 +21,8 @@ export default function Home() {
         <HeroSection />
         <AboutSection />
         <SpacesSection />
-        <CoursesSection />
-        <TeachersSection />
+        <EscolaSection />
+        <QuemSomos />
         <OperatingHoursSection />
         <SubscriptionPlans />
         <AgencySection />
