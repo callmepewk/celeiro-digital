@@ -7,23 +7,7 @@ import { format } from "date-fns";
 import { base44 } from "@/api/base44Client";
 
 export default function LeadsTable({ leads }) {
-  const exportCSV = () => {
-    const csvContent = [
-      ['Nome', 'Email', 'Telefone', 'Data de Cadastro'].join(','),
-      ...leads.map(l => [
-        l.full_name,
-        l.email,
-        l.phone,
-        format(new Date(l.created_date), 'dd/MM/yyyy HH:mm')
-      ].join(','))
-    ].join('\n');
 
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = `leads-celeiro-digital-${format(new Date(), 'yyyy-MM-dd')}.csv`;
-    link.click();
-  };
 
   const exportPDF = async () => {
     try {
@@ -49,16 +33,10 @@ export default function LeadsTable({ leads }) {
           <h3 className="text-xl font-bold text-white">Leads Capturados</h3>
           <p className="text-gray-400 text-sm mt-1">Total: {leads?.length || 0} leads</p>
         </div>
-        <div className="flex gap-2">
-          <Button onClick={exportCSV} variant="outline" className="border-white/10 text-white">
-            <Download className="w-4 h-4 mr-2" />
-            Exportar CSV
-          </Button>
-          <Button onClick={exportPDF} className="bg-gradient-to-r from-[#39FF14] to-[#00E5FF] text-black font-semibold">
-            <FileText className="w-4 h-4 mr-2" />
-            Exportar PDF
-          </Button>
-        </div>
+        <Button onClick={exportPDF} className="bg-gradient-to-r from-[#39FF14] to-[#00E5FF] text-black font-semibold w-full sm:w-auto">
+          <FileText className="w-4 h-4 mr-2" />
+          Exportar PDF
+        </Button>
       </div>
 
       <Card className="bg-white/[0.02] border-white/10">
