@@ -97,9 +97,6 @@ export default function Layout({ children }) {
               Admin
             </a>
           )}
-            <a href={createPageUrl('AccessControl')} className="px-4 py-2 text-sm rounded-lg bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all duration-300">
-              Acesso
-            </a>
           </div>
 
           {/* Mobile toggle */}
@@ -136,9 +133,6 @@ export default function Layout({ children }) {
                     Admin
                   </a>
                 )}
-                <a href={createPageUrl('AccessControl')} className="w-full block px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all">
-                  Acesso
-                </a>
               </div>
             </motion.div>
           )}

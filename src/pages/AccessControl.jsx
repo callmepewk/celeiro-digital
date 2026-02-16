@@ -10,22 +10,21 @@ export default function AccessControl() {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    // Verificar se já está logado
     const adminToken = localStorage.getItem('celeiro_admin_token');
     const studentToken = localStorage.getItem('celeiro_student_token');
     
     if (adminToken || studentToken) {
-      window.location.href = createPageUrl('Home');
+      window.location.replace(createPageUrl('Home'));
     }
     setIsReady(true);
   }, []);
 
   const handleAdminSuccess = () => {
-    window.location.href = createPageUrl('Admin');
+    window.location.replace(createPageUrl('Admin'));
   };
 
   const handleStudentSuccess = () => {
-    window.location.href = createPageUrl('Home');
+    window.location.replace(createPageUrl('Home'));
   };
 
   if (!isReady) return null;
@@ -82,7 +81,7 @@ export default function AccessControl() {
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              onClick={() => window.location.href = createPageUrl('Home')}
+              onClick={() => window.location.replace(createPageUrl('Home'))}
               className="w-full p-4 rounded-xl border-2 border-white/20 bg-white/5 hover:bg-white/10 transition-all duration-300"
             >
               <div className="text-left">

@@ -13,40 +13,34 @@ export default function AccessGate({ children }) {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    async function checkAccess() {
-      const termsAccepted = localStorage.getItem('celeiro_terms_accepted');
-      const leadSubmitted = localStorage.getItem('celeiro_lead_submitted');
-      const userEmail = localStorage.getItem('celeiro_user_email');
+    const termsAccepted = localStorage.getItem('celeiro_terms_accepted');
+    const leadSubmitted = localStorage.getItem('celeiro_lead_submitted');
+    const userEmail = localStorage.getItem('celeiro_user_email');
 
-      // Verifica se é admin (sempre libera acesso)
-      if (userEmail && ADMIN_EMAILS.includes(userEmail)) {
-        try {
-          await base44.auth.updateMe({ role: 'admin' });
-        } catch (e) {
-          console.log('Usuário já é admin');
-        }
-        localStorage.setItem('celeiro_terms_accepted', 'true');
-        localStorage.setItem('celeiro_lead_submitted', 'true');
-        setIsReady(true);
-        return;
-      }
-
-      // Se não aceitou termos, mostra modal de termos
-      if (!termsAccepted) {
-        setShowTerms(true);
-        return;
-      }
-
-      // Se já preencheu o formulário antes (tem flag de submitted), libera acesso direto
-      if (leadSubmitted === 'true') {
-        setIsReady(true);
-        return;
-      }
-
-      // Se não tem flag de submitted, mostra formulário de cadastro
-      setShowLeadForm(true);
+    // Verifica se é admin (sempre libera acesso)
+    if (userEmail && ADMIN_EMAILS.includes(userEmail)) {
+      localStorage.setItem('celeiro_terms_accepted', 'true');
+      localStorage.setItem('celeiro_lead_submitted', 'true');
+      setIsReady(true);
+      return;
     }
-    checkAccess();
+
+    // Se não aceitou termos, mostra modal de termos
+    if (!termsAccepted) {
+      setShowTerms(true);
+      setIsReady(true);
+      return;
+    }
+
+    // Se já preencheu o formulário antes (tem flag de submitted), libera acesso direto
+    if (leadSubmitted === 'true') {
+      setIsReady(true);
+      return;
+    }
+
+    // Se não tem flag de submitted, mostra formulário de cadastro
+    setShowLeadForm(true);
+    setIsReady(true);
   }, []);
 
   const handleTermsAccept = () => {
