@@ -139,6 +139,11 @@ export default function Layout({ children }) {
                     </button>
                   </Link>
                 )}
+                <Link to={createPageUrl('AccessControl')}>
+                  <button className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all">
+                    Acesso
+                  </button>
+                </Link>
               </div>
             </motion.div>
           )}
