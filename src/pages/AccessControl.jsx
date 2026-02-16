@@ -41,12 +41,12 @@ export default function AccessControl() {
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="bg-white/[0.02] border border-white/10 rounded-2xl max-w-md w-full p-6 sm:p-8 backdrop-blur-xl"
+          className="bg-white/[0.02] border border-white/10 rounded-2xl max-w-md w-full p-6 sm:p-8 backdrop-blur-xl mt-20"
         >
           <div className="text-center mb-8">
             <div className="flex items-center justify-center gap-2 mb-6">
-              <Sprout className="w-8 h-8 text-[#39FF14]" />
-              <span className="text-white font-bold text-xl">
+              <Sprout className="w-6 h-6 sm:w-8 sm:h-8 text-[#39FF14]" />
+              <span className="text-white font-bold text-lg sm:text-xl">
                 Celeiro <span className="text-[#00E5FF]">Digital</span>
               </span>
             </div>
@@ -95,8 +95,20 @@ export default function AccessControl() {
           <p className="text-xs text-gray-500 text-center mt-8">
             Acesso seguro ao portal do Celeiro Digital
           </p>
-        </motion.div>
-      ) : (
+          </motion.div>
+          ) : (
+          <div className="w-full">{/* Botão voltar */}
+          <motion.button
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            onClick={() => setAccessType(null)}
+            className="absolute top-24 left-6 sm:left-8 flex items-center gap-2 px-3 py-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-all duration-300"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            <span className="text-sm">Voltar</span>
+          </motion.button>
         <AnimatePresence>
           {accessType === 'admin' && (
             <AdminLogin onSuccess={handleAdminSuccess} />
@@ -105,7 +117,8 @@ export default function AccessControl() {
             <StudentLogin onSuccess={handleStudentSuccess} />
           )}
         </AnimatePresence>
-      )}
-    </div>
-  );
-}
+         </div>
+        )}
+        </div>
+        );
+        }
