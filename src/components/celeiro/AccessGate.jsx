@@ -4,6 +4,8 @@ import LeadCaptureForm from "./LeadCaptureForm";
 import LoginForm from "./LoginForm";
 import { base44 } from "@/api/base44Client";
 
+const ADMIN_EMAILS = ['seu-email@gmail.com', 'email-seu-pai@gmail.com'];
+
 export default function AccessGate({ children }) {
   const [showTerms, setShowTerms] = useState(false);
   const [showLeadForm, setShowLeadForm] = useState(false);
@@ -15,6 +17,19 @@ export default function AccessGate({ children }) {
       const termsAccepted = localStorage.getItem('celeiro_terms_accepted');
       const leadSubmitted = localStorage.getItem('celeiro_lead_submitted');
       const userEmail = localStorage.getItem('celeiro_user_email');
+
+      // Verifica se é admin (sempre libera acesso)
+      if (userEmail && ADMIN_EMAILS.includes(userEmail)) {
+        try {
+          await base44.auth.updateMe({ role: 'admin' });
+        } catch (e) {
+          console.log('Usuário já é admin');
+        }
+        localStorage.setItem('celeiro_terms_accepted', 'true');
+        localStorage.setItem('celeiro_lead_submitted', 'true');
+        setIsReady(true);
+        return;
+      }
 
       // Se não aceitou termos, mostra modal de termos
       if (!termsAccepted) {
