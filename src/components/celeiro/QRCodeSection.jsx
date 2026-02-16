@@ -65,7 +65,7 @@ export default function QRCodeSection() {
 
           <div className="flex flex-wrap gap-3 justify-center">
             <Button
-              onClick={() => downloadQR('png')}
+              onClick={downloadQR}
               className="bg-[#39FF14]/20 border border-[#39FF14]/50 text-[#39FF14] hover:bg-[#39FF14]/30 gap-2"
             >
               <Download className="w-4 h-4" />
