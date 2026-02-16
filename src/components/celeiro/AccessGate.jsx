@@ -4,7 +4,7 @@ import LeadCaptureForm from "./LeadCaptureForm";
 import LoginForm from "./LoginForm";
 import { base44 } from "@/api/base44Client";
 
-const ADMIN_EMAILS = ['seu-email@gmail.com', 'email-seu-pai@gmail.com'];
+const ADMIN_EMAILS = ['pedro_hbfreitas@hotmail.com'];
 
 export default function AccessGate({ children }) {
   const [showTerms, setShowTerms] = useState(false);

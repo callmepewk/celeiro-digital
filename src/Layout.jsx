@@ -92,18 +92,14 @@ export default function Layout({ children }) {
               </button>
             ))}
             {isAdmin && (
-              <Link to={createPageUrl('Admin')}>
-                <button className="flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-gradient-to-r from-[#39FF14]/10 to-[#00E5FF]/10 border border-[#39FF14]/30 text-[#39FF14] hover:border-[#39FF14]/50 transition-all duration-300">
-                  <Shield className="w-4 h-4" />
-                  Admin
-                </button>
-              </Link>
-            )}
-            <Link to={createPageUrl('AccessControl')}>
-              <button className="px-4 py-2 text-sm rounded-lg bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all duration-300">
-                Acesso
-              </button>
-            </Link>
+            <a href={createPageUrl('Admin')} className="flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-gradient-to-r from-[#39FF14]/10 to-[#00E5FF]/10 border border-[#39FF14]/30 text-[#39FF14] hover:border-[#39FF14]/50 transition-all duration-300">
+              <Shield className="w-4 h-4" />
+              Admin
+            </a>
+          )}
+            <a href={createPageUrl('AccessControl')} className="px-4 py-2 text-sm rounded-lg bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all duration-300">
+              Acesso
+            </a>
           </div>
 
           {/* Mobile toggle */}
@@ -135,18 +131,14 @@ export default function Layout({ children }) {
                   </button>
                 ))}
                 {isAdmin && (
-                  <Link to={createPageUrl('Admin')}>
-                    <button className="flex items-center gap-2 w-full px-4 py-3 rounded-lg bg-gradient-to-r from-[#39FF14]/10 to-[#00E5FF]/10 border border-[#39FF14]/30 text-[#39FF14]">
-                      <Shield className="w-4 h-4" />
-                      Admin
-                    </button>
-                  </Link>
+                  <a href={createPageUrl('Admin')} className="flex items-center gap-2 w-full px-4 py-3 rounded-lg bg-gradient-to-r from-[#39FF14]/10 to-[#00E5FF]/10 border border-[#39FF14]/30 text-[#39FF14]">
+                    <Shield className="w-4 h-4" />
+                    Admin
+                  </a>
                 )}
-                <Link to={createPageUrl('AccessControl')}>
-                  <button className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all">
-                    Acesso
-                  </button>
-                </Link>
+                <a href={createPageUrl('AccessControl')} className="w-full block px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-all">
+                  Acesso
+                </a>
               </div>
             </motion.div>
           )}
