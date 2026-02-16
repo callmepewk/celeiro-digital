@@ -113,8 +113,8 @@ export default function Admin() {
   if (!currentUser) return null;
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] py-8 px-6">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-[#0a0a0a]" style={{ paddingTop: "100px" }}>
+      <div className="max-w-7xl mx-auto px-6 pb-8">
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold text-white mb-2">Painel Admin</h1>
@@ -123,14 +123,14 @@ export default function Admin() {
           <div className="flex gap-3">
             <Button
               onClick={exportAllReports}
-              className="bg-white/5 border border-white/10 text-white hover:bg-white/10"
+              className="bg-[#39FF14]/20 border border-[#39FF14]/50 text-[#39FF14] hover:bg-[#39FF14]/30"
             >
               <Download className="w-4 h-4 mr-2" />
-              Exportar Todos os Relatórios
+              Exportar Relatórios
             </Button>
             <Link to={createPageUrl('Home')}>
-              <Button variant="outline" className="border-white/10 text-white">
-                Voltar ao Site
+              <Button className="bg-[#00E5FF]/20 border border-[#00E5FF]/50 text-[#00E5FF] hover:bg-[#00E5FF]/30">
+                ← Voltar ao Site
               </Button>
             </Link>
           </div>
