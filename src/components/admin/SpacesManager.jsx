@@ -1,125 +1,227 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { base44 } from "@/api/base44Client";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { base44 } from "@/api/base44Client";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Edit2, Trash2, Plus, Upload } from "lucide-react";
+import { Trash2, Edit2, Check } from "lucide-react";
 
 export default function SpacesManager() {
-  const [editingSpace, setEditingSpace] = useState(null);
-  const [formData, setFormData] = useState({
+  const [editingId, setEditingId] = useState(null);
+  const [editData, setEditData] = useState({});
+  const [newSpace, setNewSpace] = useState({
     name: "",
     tagline: "",
     description: "",
     image_url: ""
   });
-  const [uploading, setUploading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const queryClient = useQueryClient();
 
-  // Espaços padrão (hardcoded)
-  const defaultSpaces = [
-    { id: "coworking", name: "Coworking", tagline: "Espaço de trabalho colaborativo", description: "Ambiente preparado para profissionais que buscam conexões e produtividade." },
-    { id: "sala-reuniao", name: "Sala de Reunião", tagline: "Espaço para encontros", description: "Salas equipadas com tecnologia para suas reuniões importantes." },
-    { id: "laboratorio", name: "Laboratório", tagline: "Espaço tech", description: "Ambiente com computadores e ferramentas para projetos digitais." }
-  ];
+  const { data: spaces } = useQuery({
+    queryKey: ['spaces'],
+    queryFn: async () => {
+      return await base44.entities.Space?.list?.() || [];
+    },
+    initialData: [],
+  });
 
-  const handleImageUpload = async (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  const handleAddSpace = async () => {
+    if (!newSpace.name || !newSpace.tagline || !newSpace.description) {
+      alert("Preencha todos os campos obrigatórios");
+      return;
+    }
 
-    setUploading(true);
+    setLoading(true);
     try {
-      const { file_url } = await base44.integrations.Core.UploadFile({ file });
-      setFormData({ ...formData, image_url: file_url });
+      await base44.entities.Space.create({
+        name: newSpace.name,
+        tagline: newSpace.tagline,
+        description: newSpace.description,
+        image_url: newSpace.image_url,
+        is_displayed: true
+      });
+
+      queryClient.invalidateQueries({ queryKey: ['spaces'] });
+      setNewSpace({ name: "", tagline: "", description: "", image_url: "" });
     } catch (error) {
-      alert("Erro ao fazer upload");
+      alert("Erro ao adicionar ambiente");
     } finally {
-      setUploading(false);
+      setLoading(false);
     }
   };
 
-  const resetForm = () => {
-    setFormData({ name: "", tagline: "", description: "", image_url: "" });
-    setEditingSpace(null);
+  const handleUpdate = async (id) => {
+    if (!editData[id]) return;
+
+    setLoading(true);
+    try {
+      await base44.entities.Space.update(id, editData[id]);
+      queryClient.invalidateQueries({ queryKey: ['spaces'] });
+      setEditingId(null);
+      setEditData({});
+    } catch (error) {
+      alert("Erro ao atualizar ambiente");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    if (!confirm("Deseja excluir este ambiente?")) return;
+
+    try {
+      await base44.entities.Space.delete(id);
+      queryClient.invalidateQueries({ queryKey: ['spaces'] });
+    } catch (error) {
+      alert("Erro ao deletar ambiente");
+    }
   };
 
   return (
     <div className="space-y-6">
       <Card className="bg-white/5 border-white/10">
         <CardHeader>
-          <CardTitle className="text-white">Gerenciar Ambientes</CardTitle>
+          <CardTitle className="text-white">Gerenciar Ambientes Exibidos</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="grid gap-4">
+        <CardContent className="space-y-4">
+          <div className="grid gap-4 sm:grid-cols-2">
             <div>
               <label className="text-gray-400 text-sm mb-2 block">Nome do Ambiente *</label>
               <Input
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                value={newSpace.name}
+                onChange={(e) => setNewSpace({ ...newSpace, name: e.target.value })}
                 className="bg-white/[0.04] border-white/10 text-white"
-                placeholder="Ex: Coworking"
+                placeholder="Ex: Sala de Conferência"
               />
             </div>
 
             <div>
               <label className="text-gray-400 text-sm mb-2 block">Tagline *</label>
               <Input
-                value={formData.tagline}
-                onChange={(e) => setFormData({ ...formData, tagline: e.target.value })}
+                value={newSpace.tagline}
+                onChange={(e) => setNewSpace({ ...newSpace, tagline: e.target.value })}
                 className="bg-white/[0.04] border-white/10 text-white"
-                placeholder="Ex: Espaço de trabalho colaborativo"
+                placeholder="Ex: Inovação e Criatividade"
               />
             </div>
-
-            <div>
-              <label className="text-gray-400 text-sm mb-2 block">Descrição *</label>
-              <textarea
-                value={formData.description}
-                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                className="w-full p-3 rounded-lg bg-white/[0.04] border border-white/10 text-white text-sm"
-                rows={3}
-                placeholder="Descrição do ambiente..."
-              />
-            </div>
-
-            <div>
-              <label className="text-gray-400 text-sm mb-2 block">Imagem</label>
-              <div className="relative">
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageUpload}
-                  disabled={uploading}
-                  className="hidden"
-                  id="space-upload"
-                />
-                <label
-                  htmlFor="space-upload"
-                  className="flex items-center justify-center gap-2 p-3 rounded-lg border border-white/10 border-dashed text-gray-400 hover:text-white cursor-pointer transition-colors"
-                >
-                  <Upload className="w-4 h-4" />
-                  {uploading ? "Enviando..." : "Clique para fazer upload"}
-                </label>
-              </div>
-              {formData.image_url && (
-                <img src={formData.image_url} alt="preview" className="w-full rounded-lg mt-3 max-h-48 object-cover" />
-              )}
-            </div>
-
-            <Button
-              onClick={resetForm}
-              className="w-full bg-white/5 hover:bg-white/10 text-white"
-            >
-              Limpar
-            </Button>
           </div>
 
-          <div className="text-sm text-gray-400 p-3 bg-white/5 rounded-lg">
-            <strong>Nota:</strong> Os ambientes são exibidos na seção "Ambientes" da página inicial. Você pode atualizar as imagens e descrições aqui.
+          <div>
+            <label className="text-gray-400 text-sm mb-2 block">Descrição *</label>
+            <textarea
+              value={newSpace.description}
+              onChange={(e) => setNewSpace({ ...newSpace, description: e.target.value })}
+              className="w-full bg-white/[0.04] border border-white/10 text-white rounded-md p-2"
+              placeholder="Descreva o ambiente"
+              rows="3"
+            />
           </div>
+
+          <div>
+            <label className="text-gray-400 text-sm mb-2 block">URL da Imagem</label>
+            <Input
+              value={newSpace.image_url}
+              onChange={(e) => setNewSpace({ ...newSpace, image_url: e.target.value })}
+              className="bg-white/[0.04] border-white/10 text-white"
+              placeholder="https://exemplo.com/imagem.jpg"
+            />
+          </div>
+
+          <Button
+            onClick={handleAddSpace}
+            disabled={loading}
+            className="w-full bg-[#39FF14] text-black hover:bg-[#39FF14]/90 font-semibold"
+          >
+            {loading ? "Adicionando..." : "Adicionar Ambiente"}
+          </Button>
         </CardContent>
       </Card>
+
+      <div className="space-y-3">
+        <h3 className="text-white font-semibold">Ambientes Cadastrados ({spaces.length})</h3>
+        {spaces.length === 0 ? (
+          <p className="text-gray-400 text-sm">Nenhum ambiente cadastrado</p>
+        ) : (
+          spaces.map((space) => (
+            <Card key={space.id} className="bg-white/5 border-white/10">
+              <CardContent className="p-4">
+                {editingId === space.id ? (
+                  <div className="space-y-3">
+                    <Input
+                      value={editData[space.id]?.name || space.name}
+                      onChange={(e) => setEditData(prev => ({
+                        ...prev,
+                        [space.id]: { ...prev[space.id], name: e.target.value }
+                      }))}
+                      className="bg-white/[0.04] border-white/10 text-white"
+                    />
+                    <Input
+                      value={editData[space.id]?.tagline || space.tagline}
+                      onChange={(e) => setEditData(prev => ({
+                        ...prev,
+                        [space.id]: { ...prev[space.id], tagline: e.target.value }
+                      }))}
+                      className="bg-white/[0.04] border-white/10 text-white"
+                    />
+                    <textarea
+                      value={editData[space.id]?.description || space.description}
+                      onChange={(e) => setEditData(prev => ({
+                        ...prev,
+                        [space.id]: { ...prev[space.id], description: e.target.value }
+                      }))}
+                      className="w-full bg-white/[0.04] border border-white/10 text-white rounded-md p-2"
+                      rows="2"
+                    />
+                    <Input
+                      value={editData[space.id]?.image_url || space.image_url}
+                      onChange={(e) => setEditData(prev => ({
+                        ...prev,
+                        [space.id]: { ...prev[space.id], image_url: e.target.value }
+                      }))}
+                      className="bg-white/[0.04] border-white/10 text-white"
+                      placeholder="URL da imagem"
+                    />
+                    <Button
+                      onClick={() => handleUpdate(space.id)}
+                      disabled={loading}
+                      className="bg-[#39FF14] text-black hover:bg-[#39FF14]/90 w-full"
+                    >
+                      <Check className="w-4 h-4 mr-2" />
+                      Salvar
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <p className="text-white font-semibold">{space.name}</p>
+                      <p className="text-[#39FF14] text-sm">{space.tagline}</p>
+                      <p className="text-gray-400 text-sm mt-2">{space.description}</p>
+                      {space.image_url && (
+                        <img src={space.image_url} alt={space.name} className="mt-3 rounded-lg max-h-32 object-cover" />
+                      )}
+                    </div>
+                    <div className="flex gap-2 flex-shrink-0">
+                      <button
+                        onClick={() => setEditingId(space.id)}
+                        className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white transition-colors"
+                      >
+                        <Edit2 className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(space.id)}
+                        className="p-2 rounded-lg bg-white/5 hover:bg-red-500/20 text-red-400 transition-colors"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          ))
+        )}
+      </div>
     </div>
   );
 }
