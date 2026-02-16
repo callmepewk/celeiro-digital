@@ -97,6 +97,12 @@ export default function HeroSection() {
             <span className="relative z-10">Explorar Cursos</span>
             <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </a>
+          <button
+            onClick={() => setShowInstallPWA(true)}
+            className="px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold text-sm sm:text-base text-white border border-white/20 hover:border-[#39FF14]/50 hover:bg-[#39FF14]/5 transition-all duration-300"
+          >
+            📱 Instalar App
+          </button>
           <a
             href="#sobre"
             className="px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold text-sm sm:text-base text-white border border-white/20 hover:border-[#39FF14]/50 hover:bg-[#39FF14]/5 transition-all duration-300"
