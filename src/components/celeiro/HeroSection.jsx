@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { ChevronDown, Sprout } from "lucide-react";
+import InstallPWA from "./InstallPWA";
 
 export default function HeroSection() {
+  const [showInstallPWA, setShowInstallPWA] = useState(false);
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Animated background grid */}
@@ -120,6 +122,10 @@ export default function HeroSection() {
       >
         <ChevronDown className="w-6 h-6 text-gray-500" />
       </motion.div>
+
+      {showInstallPWA && (
+        <InstallPWA onClose={() => setShowInstallPWA(false)} />
+      )}
     </section>
   );
 }
