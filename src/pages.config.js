@@ -49,12 +49,14 @@
  */
 import Admin from './pages/Admin';
 import Home from './pages/Home';
+import AccessControl from './pages/AccessControl';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
     "Admin": Admin,
     "Home": Home,
+    "AccessControl": AccessControl,
 }
 
 export const pagesConfig = {

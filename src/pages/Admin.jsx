@@ -3,7 +3,7 @@ import { base44 } from "@/api/base44Client";
 import { useQuery } from "@tanstack/react-query";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { BarChart3, Users, BookOpen, Download, Loader2, MapPin, UserPlus, FileText, Home } from "lucide-react";
+import { BarChart3, Users, BookOpen, Download, Loader2, MapPin, UserPlus, FileText, Home, GraduationCap } from "lucide-react";
 import SeoMetrics from "../components/admin/SeoMetrics";
 import UsersTable from "../components/admin/UsersTable";
 import CourseManager from "../components/admin/CourseManager";
@@ -12,6 +12,7 @@ import LeadsTable from "../components/admin/LeadsTable";
 import SpacesManager from "../components/admin/SpacesManager";
 import MaterialManager from "../components/admin/MaterialManager";
 import AnalyticsAdvanced from "../components/admin/AnalyticsAdvanced";
+import StudentManager from "../components/admin/StudentManager";
 import { createPageUrl } from "../utils";
 import { Link } from "react-router-dom";
 
@@ -141,6 +142,10 @@ export default function Admin() {
               <BarChart3 className="w-4 h-4 mr-2" />
               Analytics
             </TabsTrigger>
+            <TabsTrigger value="students" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#39FF14] data-[state=active]:to-[#00E5FF] data-[state=active]:text-black">
+              <GraduationCap className="w-4 h-4 mr-2" />
+              Alunos
+            </TabsTrigger>
             <TabsTrigger value="users" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#39FF14] data-[state=active]:to-[#00E5FF] data-[state=active]:text-black">
               <Users className="w-4 h-4 mr-2" />
               Usuários
@@ -169,6 +174,10 @@ export default function Admin() {
 
           <TabsContent value="analytics">
             <AnalyticsAdvanced />
+          </TabsContent>
+
+          <TabsContent value="students">
+            <StudentManager />
           </TabsContent>
 
           <TabsContent value="users">
