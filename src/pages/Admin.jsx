@@ -3,12 +3,15 @@ import { base44 } from "@/api/base44Client";
 import { useQuery } from "@tanstack/react-query";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { BarChart3, Users, BookOpen, Download, Loader2, MapPin, UserPlus } from "lucide-react";
+import { BarChart3, Users, BookOpen, Download, Loader2, MapPin, UserPlus, FileText, Home } from "lucide-react";
 import SeoMetrics from "../components/admin/SeoMetrics";
 import UsersTable from "../components/admin/UsersTable";
 import CourseManager from "../components/admin/CourseManager";
 import CityManager from "../components/admin/CityManager";
 import LeadsTable from "../components/admin/LeadsTable";
+import SpacesManager from "../components/admin/SpacesManager";
+import MaterialManager from "../components/admin/MaterialManager";
+import AnalyticsAdvanced from "../components/admin/AnalyticsAdvanced";
 import { createPageUrl } from "../utils";
 import { Link } from "react-router-dom";
 
@@ -132,11 +135,11 @@ export default function Admin() {
           </div>
         </div>
 
-        <Tabs defaultValue="seo" className="space-y-6">
-          <TabsList className="bg-white/5 border border-white/10">
-            <TabsTrigger value="seo" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#39FF14] data-[state=active]:to-[#00E5FF] data-[state=active]:text-black">
+        <Tabs defaultValue="analytics" className="space-y-6">
+          <TabsList className="bg-white/5 border border-white/10 flex-wrap h-auto gap-2 p-2">
+            <TabsTrigger value="analytics" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#39FF14] data-[state=active]:to-[#00E5FF] data-[state=active]:text-black">
               <BarChart3 className="w-4 h-4 mr-2" />
-              Métricas SEO
+              Analytics
             </TabsTrigger>
             <TabsTrigger value="users" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#39FF14] data-[state=active]:to-[#00E5FF] data-[state=active]:text-black">
               <Users className="w-4 h-4 mr-2" />
@@ -145,6 +148,14 @@ export default function Admin() {
             <TabsTrigger value="courses" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#39FF14] data-[state=active]:to-[#00E5FF] data-[state=active]:text-black">
               <BookOpen className="w-4 h-4 mr-2" />
               Cursos
+            </TabsTrigger>
+            <TabsTrigger value="materials" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#39FF14] data-[state=active]:to-[#00E5FF] data-[state=active]:text-black">
+              <FileText className="w-4 h-4 mr-2" />
+              Materiais
+            </TabsTrigger>
+            <TabsTrigger value="spaces" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#39FF14] data-[state=active]:to-[#00E5FF] data-[state=active]:text-black">
+              <Home className="w-4 h-4 mr-2" />
+              Ambientes
             </TabsTrigger>
             <TabsTrigger value="cities" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#39FF14] data-[state=active]:to-[#00E5FF] data-[state=active]:text-black">
               <MapPin className="w-4 h-4 mr-2" />
@@ -156,8 +167,8 @@ export default function Admin() {
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="seo">
-            <SeoMetrics metrics={seoMetrics} />
+          <TabsContent value="analytics">
+            <AnalyticsAdvanced />
           </TabsContent>
 
           <TabsContent value="users">
@@ -166,6 +177,14 @@ export default function Admin() {
 
           <TabsContent value="courses">
             <CourseManager courses={courses} />
+          </TabsContent>
+
+          <TabsContent value="materials">
+            <MaterialManager />
+          </TabsContent>
+
+          <TabsContent value="spaces">
+            <SpacesManager />
           </TabsContent>
 
           <TabsContent value="cities">
