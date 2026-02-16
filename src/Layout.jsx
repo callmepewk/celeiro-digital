@@ -11,6 +11,9 @@ const navLinks = [
   { label: "Ambientes", href: "#ambientes" },
   { label: "Cursos", href: "#cursos" },
   { label: "Professores", href: "#professores" },
+  { label: "Horários", href: "#horarios" },
+  { label: "Planos", href: "#planos" },
+  { label: "Agência", href: "#agencia" },
   { label: "Contato", href: "#contato" },
 ];
 
