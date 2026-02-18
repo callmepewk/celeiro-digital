@@ -15,6 +15,12 @@ const cards = [
     text: "Ser referência em educação tecnológica no interior de Minas Gerais, transformando vidas através da inclusão digital.",
     color: "#00E5FF",
   },
+  {
+    icon: Heart,
+    title: "Valores",
+    text: "Inovação, acessibilidade, colaboração e compromisso com o desenvolvimento local e humano.",
+    color: "#39FF14",
+  },
 ];
 
 const methodology = {
@@ -47,7 +53,7 @@ export default function AboutSection() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-6 mb-6">
+        <div className="grid md:grid-cols-3 gap-6 mb-6">
           {cards.map((card, i) => (
             <motion.div
               key={card.title}
