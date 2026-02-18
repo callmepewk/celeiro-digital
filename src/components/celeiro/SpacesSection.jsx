@@ -169,9 +169,23 @@ export default function SpacesSection() {
               <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">
                 {current.name}
               </h3>
-              <p className="text-gray-400 text-lg leading-relaxed">
+              <p className="text-gray-400 text-lg leading-relaxed mb-6">
                 {current.description}
               </p>
+              <div className="space-y-4">
+                <p className="text-white/90 font-medium">
+                  Saiba que você pode usar esse ambiente!
+                </p>
+                <button
+                  onClick={() => {
+                    const message = `Olá, tudo bem? Fiquei interessado no ${current.name} e gostaria de mais informações sobre o uso desse ambiente.`;
+                    window.open(`https://wa.me/5521980343873?text=${encodeURIComponent(message)}`, '_blank');
+                  }}
+                  className="px-6 py-3 rounded-lg bg-gradient-to-r from-[#39FF14] to-[#00E5FF] text-black font-semibold hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl"
+                >
+                  Ficou Interessado?
+                </button>
+              </div>
             </div>
           </motion.div>
         </AnimatePresence>
