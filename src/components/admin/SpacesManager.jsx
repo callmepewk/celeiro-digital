@@ -119,13 +119,29 @@ export default function SpacesManager() {
           </div>
 
           <div>
-            <label className="text-gray-400 text-sm mb-2 block">URL da Imagem</label>
-            <Input
-              value={newSpace.image_url}
-              onChange={(e) => setNewSpace({ ...newSpace, image_url: e.target.value })}
-              className="bg-white/[0.04] border-white/10 text-white"
-              placeholder="https://exemplo.com/imagem.jpg"
+            <label className="text-gray-400 text-sm mb-2 block">Imagem (800x600px recomendado)</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={async (e) => {
+                const file = e.target.files?.[0];
+                if (file) {
+                  setLoading(true);
+                  try {
+                    const { file_url } = await base44.integrations.Core.UploadFile({ file });
+                    setNewSpace({ ...newSpace, image_url: file_url });
+                  } catch (error) {
+                    alert("Erro ao fazer upload da imagem");
+                  } finally {
+                    setLoading(false);
+                  }
+                }
+              }}
+              className="w-full bg-white/[0.04] border border-white/10 text-white rounded-md p-2 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-[#39FF14] file:text-black hover:file:bg-[#39FF14]/90"
             />
+            {newSpace.image_url && (
+              <img src={newSpace.image_url} alt="Preview" className="mt-2 rounded-lg max-h-32 object-cover" />
+            )}
           </div>
 
           <Button
@@ -173,15 +189,31 @@ export default function SpacesManager() {
                       className="w-full bg-white/[0.04] border border-white/10 text-white rounded-md p-2"
                       rows="2"
                     />
-                    <Input
-                      value={editData[space.id]?.image_url || space.image_url}
-                      onChange={(e) => setEditData(prev => ({
-                        ...prev,
-                        [space.id]: { ...prev[space.id], image_url: e.target.value }
-                      }))}
-                      className="bg-white/[0.04] border-white/10 text-white"
-                      placeholder="URL da imagem"
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          setLoading(true);
+                          try {
+                            const { file_url } = await base44.integrations.Core.UploadFile({ file });
+                            setEditData(prev => ({
+                              ...prev,
+                              [space.id]: { ...prev[space.id], image_url: file_url }
+                            }));
+                          } catch (error) {
+                            alert("Erro ao fazer upload da imagem");
+                          } finally {
+                            setLoading(false);
+                          }
+                        }
+                      }}
+                      className="w-full bg-white/[0.04] border border-white/10 text-white rounded-md p-2 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-[#39FF14] file:text-black hover:file:bg-[#39FF14]/90"
                     />
+                    {(editData[space.id]?.image_url || space.image_url) && (
+                      <img src={editData[space.id]?.image_url || space.image_url} alt="Preview" className="mt-2 rounded-lg max-h-32 object-cover" />
+                    )}
                     <Button
                       onClick={() => handleUpdate(space.id)}
                       disabled={loading}
