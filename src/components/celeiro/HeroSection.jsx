@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { ChevronDown, Sprout } from "lucide-react";
+import { ChevronDown, Sprout, LogIn } from "lucide-react";
 import InstallPWA from "./InstallPWA";
+import { createPageUrl } from "../../utils";
 
 export default function HeroSection() {
   const [showInstallPWA, setShowInstallPWA] = useState(false);
@@ -110,6 +111,13 @@ export default function HeroSection() {
             className="px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold text-sm sm:text-base text-white border border-white/20 hover:border-[#39FF14]/50 hover:bg-[#39FF14]/5 transition-all duration-300"
           >
             Conheça o Espaço
+          </a>
+          <a
+            href={createPageUrl('AccessControl')}
+            className="group relative px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold text-sm sm:text-base text-white border border-[#00E5FF]/40 hover:border-[#00E5FF]/80 hover:bg-[#00E5FF]/5 transition-all duration-300 flex items-center gap-2"
+          >
+            <LogIn className="w-4 h-4" />
+            <span>Fazer Login</span>
           </a>
         </motion.div>
       </div>

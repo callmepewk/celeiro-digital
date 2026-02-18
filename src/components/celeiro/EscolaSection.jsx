@@ -41,10 +41,42 @@ export default function EscolaSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#39FF14]/30 bg-[#39FF14]/5 mb-6">
+            <Sparkles className="w-4 h-4 text-[#39FF14]" />
+            <span className="text-[#39FF14] text-sm font-semibold">Primeira Escola de Educação Digital de Porto Firme</span>
+          </div>
           <h2 className="text-4xl font-bold text-white mb-4">Nossa Escola</h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">
-            Cursos e trilhas de aprendizado para desenvolver suas habilidades
+          <p className="text-gray-300 max-w-3xl mx-auto text-lg mb-6 leading-relaxed">
+            Trabalhamos de forma <span className="text-[#39FF14] font-semibold">híbrida</span>, combinando o melhor do ensino presencial e online para levar educação digital de qualidade para nossa comunidade.
           </p>
+          
+          <div className="max-w-3xl mx-auto space-y-6 text-left bg-white/[0.02] border border-white/10 rounded-2xl p-8 mb-12">
+            <div>
+              <h3 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
+                <BookOpen className="w-5 h-5 text-[#39FF14]" />
+                Nossos Setores
+              </h3>
+              <div className="grid md:grid-cols-2 gap-4 text-gray-300">
+                <div className="bg-white/[0.03] rounded-lg p-4 border border-white/5">
+                  <h4 className="font-semibold text-[#39FF14] mb-2">💻 Tecnologia</h4>
+                  <p className="text-sm">Desenvolvimento web, programação, design digital, automação e muito mais.</p>
+                </div>
+                <div className="bg-white/[0.03] rounded-lg p-4 border border-white/5">
+                  <h4 className="font-semibold text-[#00E5FF] mb-2">📱 Marketing</h4>
+                  <p className="text-sm">Marketing digital, gestão de redes sociais, tráfego pago e estratégias de vendas online.</p>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-xl font-bold text-white mb-3">Para quem são os cursos?</h3>
+              <p className="text-gray-300 leading-relaxed">
+                Nossos cursos são para <span className="text-white font-semibold">todas as faixas etárias</span>! 
+                Desde jovens em busca de qualificação profissional até <span className="text-[#39FF14] font-bold bg-[#39FF14]/10 px-2 py-1 rounded">cursos de alfabetização digital especialmente desenvolvidos para adultos e idosos</span>, 
+                garantindo que ninguém fique de fora da revolução digital.
+              </p>
+            </div>
+          </div>
         </motion.div>
 
         <div className="flex justify-center gap-2 mb-12 flex-wrap">
