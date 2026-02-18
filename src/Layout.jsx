@@ -17,16 +17,19 @@ const navLinks = [
   { label: "Contato", href: "#contato" },
 ];
 
-export default function Layout({ children }) {
+export default function Layout({ children, currentPageName }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const isSpecialPage = currentPageName === 'AccessControl' || currentPageName === 'Admin';
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
+  useEffect(() => {
     async function checkAdmin() {
       try {
         const user = await base44.auth.me();
@@ -61,6 +64,7 @@ export default function Layout({ children }) {
       `}</style>
 
       {/* Navigation */}
+      {!isSpecialPage && (
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
@@ -138,6 +142,7 @@ export default function Layout({ children }) {
           )}
         </AnimatePresence>
       </nav>
+      )}
 
       {children}
     </div>

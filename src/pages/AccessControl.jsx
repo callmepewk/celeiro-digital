@@ -78,17 +78,15 @@ export default function AccessControl() {
               </div>
             </motion.button>
 
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={() => window.location.replace(createPageUrl('Home'))}
+            <button
+              onClick={() => window.history.back()}
               className="w-full p-4 rounded-xl border-2 border-white/20 bg-white/5 hover:bg-white/10 transition-all duration-300"
             >
               <div className="text-left">
                 <p className="text-white font-semibold">Visitante</p>
                 <p className="text-gray-400 text-sm">Explorar sem fazer login</p>
               </div>
-            </motion.button>
+            </button>
           </div>
 
           <p className="text-xs text-gray-500 text-center mt-8">
