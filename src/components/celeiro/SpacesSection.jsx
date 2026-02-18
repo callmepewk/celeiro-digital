@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Wifi, BookOpen, Users, Video, Palette } from "lucide-react";
+import { Wifi, BookOpen, Users, Video, Palette, MessageCircle } from "lucide-react";
 
 const spaces = [
   {
@@ -79,6 +79,33 @@ export default function SpacesSection() {
             Espaços pensados para oferecer a melhor experiência de aprendizado e
             criação.
           </p>
+        </motion.div>
+
+        {/* Rental CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="max-w-3xl mx-auto mb-12 bg-gradient-to-r from-[#39FF14]/10 to-[#00E5FF]/10 border border-[#39FF14]/30 rounded-2xl p-6 sm:p-8"
+        >
+          <div className="text-center">
+            <h3 className="text-xl sm:text-2xl font-bold text-white mb-3">
+              Gostaria de alugar um dos nossos espaços para uso pessoal?
+            </h3>
+            <p className="text-gray-300 mb-6">
+              Entre em contato e reserve o ambiente ideal para suas necessidades
+            </p>
+            <a
+              href="https://wa.me/5521980343873?text=Olá!%20Gostaria%20de%20reservar%20um%20espaço%20no%20Celeiro%20Digital."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-black bg-gradient-to-r from-[#39FF14] to-[#00E5FF] hover:opacity-90 transition-opacity"
+            >
+              <MessageCircle className="w-5 h-5" />
+              Falar no WhatsApp
+            </a>
+          </div>
         </motion.div>
 
         {/* Tab navigation */}
