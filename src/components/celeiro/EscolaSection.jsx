@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { BookOpen, Search, ChevronRight, Sparkles } from "lucide-react";
 
 export default function EscolaSection() {
-  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export default function EscolaSection() {
 
   const categories = ['all', ...new Set(courses.map(c => c.category).filter(Boolean))];
   
-  const filteredCourses = selectedCategory === 'all' 
+  const filteredCourses = !selectedCategory || selectedCategory === 'all'
     ? courses 
     : courses.filter(c => c.category === selectedCategory);
 
@@ -79,8 +79,8 @@ export default function EscolaSection() {
           </div>
         </motion.div>
 
-        <div className="flex justify-center gap-2 mb-12 flex-wrap">
-          {categories.map(cat => (
+        <div className="flex justify-center gap-3 mb-12 flex-wrap items-center">
+          {categories.filter(cat => cat !== 'all').map(cat => (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
@@ -90,9 +90,18 @@ export default function EscolaSection() {
                   : 'bg-white/5 text-gray-400 hover:bg-white/10'
               }`}
             >
-              {cat === 'all' ? 'Todos' : cat}
+              {cat}
             </button>
           ))}
+          <a
+            href="https://wa.me/5521980343873?text=Olá!%20Gostaria%20de%20mais%20informações%20sobre%20os%20cursos%20do%20Celeiro%20Digital."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-4 py-2 rounded-full text-sm font-medium bg-[#00E5FF]/10 text-[#00E5FF] border border-[#00E5FF]/30 hover:bg-[#00E5FF]/20 transition-all flex items-center gap-2"
+          >
+            <Search className="w-4 h-4" />
+            Mais informações?
+          </a>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">

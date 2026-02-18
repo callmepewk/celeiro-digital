@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ChevronDown, Sprout, LogIn } from "lucide-react";
 import InstallPWA from "./InstallPWA";
 import { createPageUrl } from "../../utils";
+import { Link } from "react-router-dom";
 
 export default function HeroSection() {
   const [showInstallPWA, setShowInstallPWA] = useState(false);
@@ -112,13 +113,13 @@ export default function HeroSection() {
           >
             Conheça o Espaço
           </a>
-          <a
-            href={createPageUrl('AccessControl')}
+          <Link
+            to={createPageUrl('AccessControl')}
             className="group relative px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold text-sm sm:text-base text-white border border-[#00E5FF]/40 hover:border-[#00E5FF]/80 hover:bg-[#00E5FF]/5 transition-all duration-300 flex items-center gap-2"
           >
             <LogIn className="w-4 h-4" />
             <span>Fazer Login</span>
-          </a>
+          </Link>
         </motion.div>
       </div>
 
