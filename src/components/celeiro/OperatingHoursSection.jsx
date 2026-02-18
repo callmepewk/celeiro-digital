@@ -81,7 +81,7 @@ export default function OperatingHoursSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl font-bold text-white mb-4">Nosso Funcionamento</h2>
+          <h2 className="text-4xl font-bold text-white mb-4">Nossos Horários</h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
             Metodologia inovadora que transforma conhecimento em resultados. Confira nossos horários e como trabalhamos.
           </p>
