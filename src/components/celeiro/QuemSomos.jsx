@@ -7,7 +7,7 @@ const team = [
     name: "Jauru Nunes de Freitas",
     role: "Fundador & Educador",
     description:
-      "Médico dermatologista formado pela UFRGS e Università La Sapienza de Roma. Mestre em Marketing Digital com amplo conhecimento e certificações na área de tecnologia. Idealizador do Celeiro Digital, trabalha com eficiência para democratizar a educação digital.",
+      "Médico dermatologista formado pela UFRGS e Università La Sapienza de Roma. Mestre em Marketing Digital com amplo conhecimento e certificações na área de tecnologia, incluindo Computer Science for Business Professional pela Harvard University. Idealizador do Celeiro Digital, trabalha com eficiência para democratizar a educação digital.",
     icon: Sprout,
     color: "#39FF14",
     image: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/698e9132814b2809b199a498/d2d5b4702_image.png",
