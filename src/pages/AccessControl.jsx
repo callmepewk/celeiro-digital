@@ -62,7 +62,7 @@ export default function AccessControl() {
             >
               <div className="text-left">
                 <p className="text-[#39FF14] font-semibold">Acesso Admin</p>
-                <p className="text-gray-400 text-sm">Para administradores</p>
+                <p className="text-gray-400 text-sm">Apenas para administradores autorizados</p>
               </div>
             </motion.button>
 
@@ -89,7 +89,30 @@ export default function AccessControl() {
             </button>
           </div>
 
-          <p className="text-xs text-gray-500 text-center mt-8">
+          <div className="mt-8 pt-6 border-t border-white/10">
+            <p className="text-gray-400 text-center mb-4 text-sm">
+              Gostaria de colocar um Celeiro Digital na sua cidade?
+            </p>
+            <div className="flex gap-2 justify-center">
+              <a
+                href="mailto:celeirodigitalpf@gmail.com"
+                className="px-4 py-2 text-sm rounded-lg bg-gradient-to-r from-[#39FF14] to-[#00E5FF] text-black font-semibold hover:opacity-90 transition-all duration-300"
+              >
+                Enviar Email
+              </a>
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText('celeirodigitalpf@gmail.com');
+                  alert('Email copiado!');
+                }}
+                className="px-4 py-2 text-sm rounded-lg border border-white/20 text-white hover:bg-white/10 transition-all duration-300"
+              >
+                Copiar Email
+              </button>
+            </div>
+          </div>
+
+          <p className="text-xs text-gray-500 text-center mt-6">
             Acesso seguro ao portal do Celeiro Digital
           </p>
           </motion.div>
