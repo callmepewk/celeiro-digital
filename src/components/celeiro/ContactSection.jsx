@@ -67,7 +67,7 @@ export default function ContactSection() {
               {
                 icon: Mail,
                 title: "E-mail",
-                text: "pedro_hbfreitas@hotmail.com",
+                text: "celeirodigitalpf@gmail.com",
                 color: "#00E5FF",
               },
               {
