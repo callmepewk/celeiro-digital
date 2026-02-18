@@ -16,11 +16,11 @@ export default function TermsModal({ onAccept }) {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-lg flex items-center justify-center p-2 sm:p-4">
+    <div className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-lg flex items-center justify-center p-4 overflow-y-auto">
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="bg-[#0a0a0a] border border-white/20 rounded-2xl max-w-3xl w-full max-h-[90vh] sm:max-h-[85vh] flex flex-col"
+        className="bg-[#0a0a0a] border border-white/20 rounded-2xl max-w-3xl w-full my-4 flex flex-col max-h-[calc(100vh-2rem)]"
       >
         <div className="p-4 sm:p-6 border-b border-white/10">
           <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">Termos e Condições de Uso</h2>
