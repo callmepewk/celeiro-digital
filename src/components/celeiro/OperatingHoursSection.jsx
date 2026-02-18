@@ -87,35 +87,12 @@ export default function OperatingHoursSection() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12 mb-12">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="bg-white/[0.05] border border-white/10 rounded-2xl p-8"
-          >
-            <h3 className="text-2xl font-bold text-white mb-6">Metodologia</h3>
-            <ul className="space-y-4">
-              {[
-                "Diagnóstico detalhado das necessidades",
-                "Planejamento estratégico personalizado",
-                "Implementação com suporte contínuo",
-                "Acompanhamento e otimização permanente",
-                "Resultados mensuráveis e transparentes"
-              ].map((item, idx) => (
-                <li key={idx} className="flex gap-3 text-gray-300">
-                  <span className="w-2 h-2 rounded-full bg-[#39FF14] flex-shrink-0 mt-2" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-          >
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="max-w-2xl mx-auto"
+        >
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-2xl font-bold text-white">Horários de Atendimento</h3>
               {isAdmin && (
@@ -190,8 +167,7 @@ export default function OperatingHoursSection() {
                 );
               })}
             </div>
-          </motion.div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
