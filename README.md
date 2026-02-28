@@ -1,39 +1,206 @@
-**Welcome to your Base44 project** 
+Celeiro Digital
 
-**About**
+Produção, Posicionamento e Autoridade Digital para Especialistas
 
-View and Edit  your app on [Base44.com](http://Base44.com) 
+🌐 Produção: https://celeirodigital.base44.app
 
-This project contains everything you need to run your app locally.
+Status: Em produção
+Ambiente: Base44 Cloud
 
-**Edit the code in your local development environment**
+📌 Visão Geral
 
-Any change pushed to the repo will also be reflected in the Base44 Builder.
+O Celeiro Digital é uma plataforma de posicionamento estratégico e produção de ativos digitais para especialistas, mentores e marcas pessoais.
 
-**Prerequisites:** 
+O projeto tem como objetivo transformar conhecimento técnico em:
 
-1. Clone the repository using the project's Git URL 
-2. Navigate to the project directory
-3. Install dependencies: `npm install`
-4. Create an `.env.local` file and set the right environment variables
+Produtos digitais
 
-```
-VITE_BASE44_APP_ID=your_app_id
-VITE_BASE44_APP_BASE_URL=your_backend_url
+Autoridade de mercado
 
-e.g.
-VITE_BASE44_APP_ID=cbef744a8545c389ef439ea6
-VITE_BASE44_APP_BASE_URL=https://my-to-do-list-81bfaad7.base44.app
-```
+Ecossistema de monetização recorrente
 
-Run the app: `npm run dev`
+A arquitetura foi pensada para escalar produtos digitais sem necessidade de refatorações estruturais.
 
-**Publish your changes**
+🏗 Arquitetura Técnica
+Stack
 
-Open [Base44.com](http://Base44.com) and click on Publish.
+Frontend:
 
-**Docs & Support**
+React (Base44 Engine)
 
-Documentation: [https://docs.base44.com/Integrations/Using-GitHub](https://docs.base44.com/Integrations/Using-GitHub)
+TailwindCSS
 
-Support: [https://app.base44.com/support](https://app.base44.com/support)
+Componentização modular
+
+Backend:
+
+Base44 Server Runtime
+
+API integrada
+
+Gerenciamento interno de rotas
+
+Banco:
+
+Base44 Database (ou externo via PostgreSQL)
+
+Infra:
+
+Deploy serverless via Base44
+
+CDN nativa
+
+SSL automático
+
+📂 Estrutura do Projeto
+/src
+  /components
+  /pages
+  /hooks
+  /libs
+  /utils
+/public
+
+Organização pensada para:
+
+Separação clara de responsabilidades
+
+Facilidade de manutenção
+
+Escalabilidade horizontal
+
+Reaproveitamento de componentes
+
+🎯 Objetivo Estratégico
+
+O Celeiro Digital funciona como:
+
+Hub de captura de leads
+
+Plataforma de validação de oferta
+
+Motor de geração de autoridade
+
+Base para produtos premium (mentorias / comunidades / formações)
+
+Modelo escalável para múltiplos especialistas.
+
+🔐 Variáveis de Ambiente
+
+Exemplo:
+
+VITE_API_URL=
+DATABASE_URL=
+JWT_SECRET=
+
+Caso migre para VPS:
+
+Necessário configurar Nginx
+
+PM2 para gerenciamento
+
+Certbot para SSL
+
+PostgreSQL dedicado (recomendado)
+
+🚀 Deploy
+
+Ambiente atual:
+Base44
+
+Deploy padrão:
+
+Build automático
+
+Provisionamento SSL
+
+CDN integrada
+
+Para migração futura:
+
+git clone
+
+npm install
+
+npm run build
+
+PM2 start
+
+Configurar Nginx
+
+Certbot SSL
+
+🧠 Modelo de Negócio
+
+Estrutura pensada para:
+
+Venda de produtos digitais
+
+Assinaturas recorrentes
+
+Comunidade premium
+
+Upsell estratégico
+
+Monetização orientada por autoridade.
+
+📈 Roadmap Técnico
+
+Fase 1:
+
+Estrutura institucional
+
+Captura de leads
+
+Fase 2:
+
+Área de membros
+
+Sistema de pagamento integrado
+
+CRM interno
+
+Fase 3:
+
+Analytics avançado
+
+Painel administrativo
+
+Automação com IA
+
+🔄 Escalabilidade
+
+Projeto preparado para:
+
+Multi-produtos
+
+Multi-landing pages
+
+Multi-domínios
+
+Integração com gateways
+
+Internacionalização
+
+Arquitetura compatível com futura migração para:
+
+VPS própria
+
+Docker
+
+Kubernetes (caso escale)
+
+👨‍💻 Gestão Técnica
+
+Responsável técnico:
+Pedro Henrique Brezolin de Freitas — CTO
+
+Modelo de gestão:
+
+Versionamento Git
+
+Deploy contínuo
+
+Documentação estruturada
+
+Padronização de stack
