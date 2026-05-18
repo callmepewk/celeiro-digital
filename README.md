@@ -1,58 +1,63 @@
-Celeiro Digital
+# Celeiro Digital
 
-Produção, Posicionamento e Autoridade Digital para Especialistas
+Plataforma de Produção, Posicionamento e Autoridade Digital
 
-🌐 Produção: https://celeirodigital.base44.app
+---
 
-Status: Em produção
-Ambiente: Base44 Cloud
+## Visão Geral
 
-📌 Visão Geral
+O **Celeiro Digital** é uma plataforma estratégica desenvolvida para transformar conhecimento técnico em ativos digitais escaláveis, autoridade de mercado e estruturas de monetização recorrente.
 
-O Celeiro Digital é uma plataforma de posicionamento estratégico e produção de ativos digitais para especialistas, mentores e marcas pessoais.
+O sistema é voltado para especialistas, mentores e marcas pessoais que desejam estruturar, validar e expandir produtos digitais de forma organizada e sustentável.
 
-O projeto tem como objetivo transformar conhecimento técnico em:
+Sua arquitetura foi concebida para permitir crescimento contínuo sem necessidade de refatorações estruturais, suportando múltiplos produtos, audiências e canais.
 
-Produtos digitais
+---
 
-Autoridade de mercado
+## Objetivo
 
-Ecossistema de monetização recorrente
+A plataforma tem como finalidade:
 
-A arquitetura foi pensada para escalar produtos digitais sem necessidade de refatorações estruturais.
+* Estruturar e validar ofertas digitais
+* Transformar conhecimento em produtos escaláveis
+* Construir autoridade no ambiente digital
+* Criar ecossistemas de monetização recorrente
+* Sustentar crescimento previsível baseado em posicionamento
 
-🏗 Arquitetura Técnica
-Stack
+---
 
-Frontend:
+## Arquitetura Técnica
 
-React (Base44 Engine)
+### Stack
 
-TailwindCSS
+**Frontend**
 
-Componentização modular
+* React (Base44 Engine)
+* TailwindCSS
+* Arquitetura modular baseada em componentes
 
-Backend:
+**Backend**
 
-Base44 Server Runtime
+* Base44 Server Runtime
+* API integrada
+* Gerenciamento interno de rotas
 
-API integrada
+**Banco de Dados**
 
-Gerenciamento interno de rotas
+* Base44 Database
+* Possibilidade de integração com PostgreSQL
 
-Banco:
+**Infraestrutura**
 
-Base44 Database (ou externo via PostgreSQL)
+* Deploy serverless via Base44
+* CDN nativa
+* SSL automático
 
-Infra:
+---
 
-Deploy serverless via Base44
+## Estrutura do Projeto
 
-CDN nativa
-
-SSL automático
-
-📂 Estrutura do Projeto
+```
 /src
   /components
   /pages
@@ -60,147 +65,159 @@ SSL automático
   /libs
   /utils
 /public
+```
 
-Organização pensada para:
+Organização projetada para:
 
-Separação clara de responsabilidades
+* Separação clara de responsabilidades
+* Facilidade de manutenção
+* Escalabilidade horizontal
+* Reutilização de componentes
 
-Facilidade de manutenção
+---
 
-Escalabilidade horizontal
+## Função Estratégica
 
-Reaproveitamento de componentes
+O Celeiro Digital atua como:
 
-🎯 Objetivo Estratégico
+* Hub de captura de leads
+* Plataforma de validação de ofertas
+* Motor de construção de autoridade
+* Base para produtos premium (mentorias, comunidades e formações)
+* Modelo replicável para múltiplos especialistas
 
-O Celeiro Digital funciona como:
+---
 
-Hub de captura de leads
+## Variáveis de Ambiente
 
-Plataforma de validação de oferta
+Exemplo de configuração:
 
-Motor de geração de autoridade
-
-Base para produtos premium (mentorias / comunidades / formações)
-
-Modelo escalável para múltiplos especialistas.
-
-🔐 Variáveis de Ambiente
-
-Exemplo:
-
+```
 VITE_API_URL=
 DATABASE_URL=
 JWT_SECRET=
+```
 
-Caso migre para VPS:
+Em ambientes dedicados (VPS), recomenda-se:
 
-Necessário configurar Nginx
+* Configuração de Nginx
+* Gerenciamento de processos com PM2
+* SSL via Certbot
+* Banco de dados PostgreSQL dedicado
 
-PM2 para gerenciamento
+---
 
-Certbot para SSL
+## Deploy
 
-PostgreSQL dedicado (recomendado)
+### Ambiente Atual
 
-🚀 Deploy
+* Base44 Cloud
+* Build automático
+* Provisionamento de SSL
+* CDN integrada
 
-Ambiente atual:
-Base44
+### Migração Futura
 
-Deploy padrão:
+* Clonagem do repositório
+* Instalação de dependências
+* Build de produção
+* Gerenciamento com PM2
+* Configuração de Nginx
+* Implementação de SSL
 
-Build automático
+---
 
-Provisionamento SSL
+## Modelo de Negócio
 
-CDN integrada
+Estrutura projetada para:
 
-Para migração futura:
+* Venda de produtos digitais
+* Assinaturas recorrentes
+* Comunidades premium
+* Estratégias de upsell
+* Monetização baseada em autoridade
 
-git clone
+---
 
-npm install
+## Roadmap Técnico
 
-npm run build
+**Fase 1**
 
-PM2 start
+* Estrutura institucional
+* Captura de leads
 
-Configurar Nginx
+**Fase 2**
 
-Certbot SSL
+* Área de membros
+* Sistema de pagamento integrado
+* CRM interno
 
-🧠 Modelo de Negócio
+**Fase 3**
 
-Estrutura pensada para:
+* Analytics avançado
+* Painel administrativo
+* Automações com inteligência artificial
 
-Venda de produtos digitais
+---
 
-Assinaturas recorrentes
+## Escalabilidade
 
-Comunidade premium
+O sistema está preparado para:
 
-Upsell estratégico
+* Multi-produtos
+* Multi-landing pages
+* Multi-domínios
+* Integração com gateways de pagamento
+* Internacionalização
 
-Monetização orientada por autoridade.
+Compatível com futuras migrações para:
 
-📈 Roadmap Técnico
+* VPS dedicada
+* Containers (Docker)
+* Orquestração com Kubernetes
 
-Fase 1:
+---
 
-Estrutura institucional
-
-Captura de leads
-
-Fase 2:
-
-Área de membros
-
-Sistema de pagamento integrado
-
-CRM interno
-
-Fase 3:
-
-Analytics avançado
-
-Painel administrativo
-
-Automação com IA
-
-🔄 Escalabilidade
-
-Projeto preparado para:
-
-Multi-produtos
-
-Multi-landing pages
-
-Multi-domínios
-
-Integração com gateways
-
-Internacionalização
-
-Arquitetura compatível com futura migração para:
-
-VPS própria
-
-Docker
-
-Kubernetes (caso escale)
-
-👨‍💻 Gestão Técnica
+## Gestão Técnica
 
 Responsável técnico:
 Pedro Henrique Brezolin de Freitas — CTO
 
 Modelo de gestão:
 
-Versionamento Git
+* Versionamento via Git
+* Deploy contínuo
+* Documentação estruturada
+* Padronização de stack e arquitetura
 
-Deploy contínuo
+---
 
-Documentação estruturada
+## Propriedade Intelectual e Proteção Legal
 
-Padronização de stack
+Este software é protegido pelas legislações vigentes:
+
+* **Lei nº 9.609/1998 (Lei do Software)**
+* **Lei nº 9.610/1998 (Lei de Direitos Autorais)**
+* **Convenção de Berna (proteção internacional automática)**
+
+---
+
+### Declaração de Autoria
+
+Toda a concepção, estrutura, arquitetura, organização de componentes, lógica de escalabilidade e modelo estratégico são de autoria do desenvolvedor responsável.
+
+O sistema constitui parte de um ecossistema maior de soluções digitais, com integração estrutural e dependência tecnológica entre projetos.
+
+Registros técnicos, versionamento, documentação e histórico de desenvolvimento comprovam anterioridade e titularidade intelectual.
+
+---
+
+## Licença
+
+Proprietário – Uso interno e comercial restrito.
+É proibida a reprodução, modificação, distribuição ou exploração sem autorização expressa do autor.
+
+---
+
+
+Isso aqui já está virando um patrimônio intelectual bem estruturado — dá pra blindar forte.
